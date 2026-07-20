@@ -1,0 +1,3679 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%2306090F%22/%3E%0A%3Cpath%20d%3D%22M20%2014h24v10a12%2012%200%200%201-24%200V14z%22%20fill%3D%22%23F4B942%22/%3E%0A%3Cpath%20d%3D%22M20%2016h-6a2%202%200%200%200-2%202v2a8%208%200%200%200%208%208%22%20stroke%3D%22%23F4B942%22%20stroke-width%3D%223%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22/%3E%0A%3Cpath%20d%3D%22M44%2016h6a2%202%200%200%201%202%202v2a8%208%200%200%201-8%208%22%20stroke%3D%22%23F4B942%22%20stroke-width%3D%223%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22/%3E%0A%3Crect%20x%3D%2229%22%20y%3D%2236%22%20width%3D%226%22%20height%3D%228%22%20fill%3D%22%23F4B942%22/%3E%0A%3Crect%20x%3D%2222%22%20y%3D%2244%22%20width%3D%2220%22%20height%3D%225%22%20rx%3D%222.5%22%20fill%3D%22%2316E37A%22/%3E%0A%3C/svg%3E">
+<title>eFootball Tournament Master</title>
+<style>
+/* ============================================================================
+   eFootball Tournament Master — style.css
+   Design language: "Stadium at Night" — a dark broadcast-graphics package
+   built from pitch neon-green, trophy gold and floodlight sweeps, with a
+   condensed scoreboard type system.
+   ============================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap');
+
+:root{
+  --bg-void:#06090F;
+  --bg-panel:#0E141F;
+  --bg-panel-2:#131C2B;
+  --bg-panel-3:#182337;
+  --border:rgba(255,255,255,.08);
+  --border-strong:rgba(255,255,255,.16);
+  --text:#F1F5F4;
+  --text-muted:#8A96A3;
+  --text-dim:#5B6675;
+
+  --pitch:#16E37A;
+  --pitch-dim:#0E9857;
+  --gold:#F4B942;
+  --ice:#4FD6FF;
+  --crimson:#FF3B4E;
+  --purple:#B400E0;
+
+  --league-primary:#0E3A5F;
+  --league-secondary:#16E37A;
+  --league-accent:#F4B942;
+
+  --font-display:'Teko',sans-serif;
+  --font-body:'Manrope',sans-serif;
+  --font-data:'Oswald',sans-serif;
+
+  --radius-s:8px;
+  --radius-m:14px;
+  --radius-l:22px;
+  --shadow-soft:0 10px 30px rgba(0,0,0,.35);
+  --nav-h:72px;
+}
+
+[data-mode="light"]{
+  --bg-void:#F3F5F7;
+  --bg-panel:#FFFFFF;
+  --bg-panel-2:#F7F8FA;
+  --bg-panel-3:#EDF0F3;
+  --border:rgba(10,20,30,.10);
+  --border-strong:rgba(10,20,30,.18);
+  --text:#0E141F;
+  --text-muted:#4B5563;
+  --text-dim:#8892A0;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg-void);
+  color:var(--text);
+  font-family:var(--font-body);
+  min-height:100vh;
+  direction:rtl;
+  text-align:right;
+  padding-bottom:calc(var(--nav-h) + 14px);
+  transition:background .25s ease, color .25s ease;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;}
+ul{list-style:none;margin:0;padding:0;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:.3px;margin:0;}
+.num, .data{font-family:var(--font-data);font-variant-numeric:tabular-nums;}
+
+/* ---------------------------------------------------------------- layout */
+.page{
+  max-width:960px;
+  margin:0 auto;
+  padding:18px 16px 30px;
+}
+.page-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:18px;gap:10px;flex-wrap:wrap;
+}
+.page-title{font-size:34px;line-height:1;display:flex;align-items:center;gap:10px;}
+.page-sub{color:var(--text-muted);font-size:14px;margin-top:4px;}
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;color:var(--text-muted);
+  font-size:14px;padding:8px 12px;border:1px solid var(--border);border-radius:999px;
+}
+.back-link:hover{color:var(--text);border-color:var(--border-strong);}
+
+.section{margin:26px 0;}
+.section-title{
+  font-size:22px;display:flex;align-items:center;gap:8px;margin-bottom:12px;
+  color:var(--text);
+}
+.section-title small{font-family:var(--font-body);font-size:12px;color:var(--text-muted);font-weight:600;}
+
+/* ---------------------------------------------------------------- cards */
+.card{
+  background:linear-gradient(180deg,var(--bg-panel-2),var(--bg-panel));
+  border:1px solid var(--border);
+  border-radius:var(--radius-m);
+  padding:18px;
+}
+.card + .card{margin-top:12px;}
+.grid{display:grid;gap:12px;}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+@media (max-width:640px){.grid-2,.grid-3{grid-template-columns:1fr 1fr;}}
+
+/* ---------------------------------------------------------------- buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 20px;border-radius:999px;border:1px solid var(--border-strong);
+  background:var(--bg-panel-3);color:var(--text);font-weight:700;font-size:15px;
+  cursor:pointer;transition:transform .15s ease, filter .15s ease, background .2s ease;
+}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.btn-block{width:100%;}
+.btn-primary{
+  background:linear-gradient(135deg,var(--pitch),var(--pitch-dim));
+  color:#04150C;border-color:transparent;
+}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),#C9861F);
+  color:#241300;border-color:transparent;
+}
+.btn-ghost{background:transparent;}
+.btn-danger{background:rgba(255,59,78,.12);color:var(--crimson);border-color:rgba(255,59,78,.35);}
+.btn-sm{padding:8px 14px;font-size:13px;border-radius:10px;}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+
+/* ---------------------------------------------------------------- forms */
+label{display:block;font-size:13px;color:var(--text-muted);margin-bottom:6px;font-weight:600;}
+.field{margin-bottom:16px;}
+input[type=text], input[type=number], select, textarea{
+  width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border-strong);
+  background:var(--bg-void);color:var(--text);font-family:inherit;font-size:15px;
+  outline:none;transition:border-color .15s ease, box-shadow .15s ease;
+}
+input:focus, select:focus, textarea:focus{border-color:var(--pitch);box-shadow:0 0 0 3px rgba(22,227,122,.18);}
+textarea{resize:vertical;min-height:80px;}
+.choice-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
+.choice{
+  border:1px solid var(--border-strong);border-radius:10px;padding:10px;text-align:center;
+  cursor:pointer;background:var(--bg-panel-3);font-size:14px;font-weight:600;
+  transition:all .15s ease;
+}
+.choice.selected{border-color:var(--pitch);background:rgba(22,227,122,.12);color:var(--pitch);}
+.choice .flag{font-size:22px;display:block;margin-bottom:4px;}
+.choice .eftm-badge{margin:0 auto 6px;}
+
+/* ---------------------------------------------------------------- HOME HERO */
+.hero{
+  position:relative;min-height:78vh;border-radius:0 0 28px 28px;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px 30px;text-align:center;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(22,227,122,.16), transparent 55%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 2px, transparent 2px 42px),
+    var(--bg-void);
+}
+.hero-pitch-lines{
+  position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 78px, rgba(255,255,255,.035) 78px 80px);
+}
+.floodlight{
+  position:absolute;top:-30%;width:180%;height:220%;left:-40%;
+  background:conic-gradient(from 0deg at 30% 20%, transparent 0deg, rgba(22,227,122,.10) 12deg, transparent 30deg, transparent 360deg);
+  animation:sweep 14s linear infinite;
+  z-index:0;pointer-events:none;
+}
+.floodlight.f2{
+  background:conic-gradient(from 180deg at 70% 10%, transparent 0deg, rgba(244,185,66,.09) 14deg, transparent 34deg, transparent 360deg);
+  animation:sweep 18s linear infinite reverse;
+}
+@keyframes sweep{ to{ transform:rotate(360deg); } }
+
+.hero-emblem{
+  position:relative;z-index:1;font-size:78px;line-height:1;
+  filter:drop-shadow(0 0 26px rgba(22,227,122,.55));
+  animation:float-y 4.2s ease-in-out infinite;
+}
+@keyframes float-y{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+
+.hero h1{
+  position:relative;z-index:1;font-size:52px;letter-spacing:.5px;margin-top:10px;
+  background:linear-gradient(90deg,var(--pitch),var(--ice));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero .tagline{position:relative;z-index:1;color:var(--text-muted);font-size:14px;margin-top:2px;letter-spacing:2px;text-transform:uppercase;}
+
+.hero-rule{
+  position:relative;z-index:1;width:100%;max-width:340px;height:1px;margin:22px 0;
+  background:linear-gradient(90deg,transparent,var(--border-strong),transparent);
+}
+
+/* squad-list style menu: each item behaves like a lineup row with a jersey badge */
+.squad-menu{position:relative;z-index:1;width:100%;max-width:420px;display:flex;flex-direction:column;gap:10px;}
+.squad-item{
+  display:flex;align-items:center;gap:14px;padding:14px 16px;
+  background:linear-gradient(90deg,var(--bg-panel-2),var(--bg-panel));
+  border:1px solid var(--border);border-radius:12px;
+  transition:transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.squad-item:hover{transform:translateX(-4px);border-color:var(--pitch);}
+[data-mode="light"] .squad-item:hover{transform:translateX(4px);}
+.squad-num{
+  font-family:var(--font-data);font-size:22px;color:var(--pitch);min-width:34px;
+  border:1px solid var(--border-strong);border-radius:8px;text-align:center;padding:4px 0;
+}
+.squad-icon{font-size:22px;}
+
+/* ---------------------------------------------------------------- BADGES (shield crest) */
+.eftm-badge{
+  --b-primary:#0E3A5F; --b-secondary:#16E37A; --b-accent:#F4B942;
+  position:relative;
+  width:38px;height:44px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(155deg,var(--b-secondary),var(--b-primary) 75%);
+  clip-path:polygon(0% 0%,100% 0%,100% 58%,50% 100%,0% 58%);
+  font-size:17px;line-height:1;
+  box-shadow:0 3px 8px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.eftm-badge::after{
+  content:"";position:absolute;inset:0;
+  clip-path:polygon(0% 0%,100% 0%,100% 58%,50% 100%,0% 58%);
+  border:1.5px solid var(--b-accent);opacity:.85;pointer-events:none;
+}
+.eftm-badge-lg{width:56px;height:66px;font-size:26px;}
+.eftm-badge-sm{width:30px;height:35px;font-size:13px;}
+.squad-text{flex:1;text-align:right;}
+.squad-text b{display:block;font-size:17px;}
+.squad-text span{display:block;font-size:12px;color:var(--text-muted);}
+.squad-arrow{color:var(--text-dim);font-size:18px;}
+
+/* ---------------------------------------------------------------- NAV */
+.eftm-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;height:var(--nav-h);
+  display:flex;justify-content:space-around;align-items:center;
+  background:rgba(10,14,22,.92);backdrop-filter:blur(14px);
+  border-top:1px solid var(--border);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+[data-mode="light"] .eftm-nav{background:rgba(255,255,255,.92);}
+.eftm-nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  color:var(--text-dim);font-size:10px;font-weight:700;padding:6px 4px;flex:1;
+}
+.eftm-nav-item .nav-icon{font-size:19px;display:flex;align-items:center;justify-content:center;}
+.eftm-nav-item .nav-icon svg{width:21px;height:21px;stroke:currentColor;transition:transform .18s ease;}
+.eftm-nav-item.active .nav-icon svg{transform:translateY(-1px);}
+.eftm-nav-item.active{color:var(--pitch);}
+
+/* ---------------------------------------------------------------- LEADERBOARD TABLE */
+.standings-table{width:100%;border-collapse:collapse;font-size:13px;}
+.standings-table th{
+  font-family:var(--font-body);font-size:11px;color:var(--text-dim);font-weight:700;
+  text-transform:uppercase;padding:8px 6px;border-bottom:1px solid var(--border-strong);
+}
+.standings-table td{padding:10px 6px;border-bottom:1px solid var(--border);}
+.standings-table tr:last-child td{border-bottom:none;}
+.standings-row{display:flex;align-items:center;gap:8px;}
+.rank-badge{
+  font-family:var(--font-data);width:26px;height:26px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+  background:var(--bg-panel-3);color:var(--text-muted);
+}
+.rank-badge.top1{background:linear-gradient(135deg,var(--gold),#C9861F);color:#241300;}
+.rank-badge.top2{background:linear-gradient(135deg,#C7D0DA,#8895A3);color:#0E141F;}
+.rank-badge.top3{background:linear-gradient(135deg,#D9955A,#8A5324);color:#1a0d02;}
+.trend{font-weight:800;font-size:13px;}
+.trend-up{color:var(--pitch);}
+.trend-down{color:var(--crimson);}
+.trend-same{color:var(--text-dim);}
+.trend-new{color:var(--ice);}
+.player-cell{display:flex;align-items:center;gap:8px;}
+.player-avatar{font-size:18px;}
+.pts-cell{font-family:var(--font-data);font-weight:700;font-size:16px;color:var(--pitch);}
+
+/* ---------------------------------------------------------------- PLAYER CARD */
+.player-card{
+  background:linear-gradient(160deg,var(--bg-panel-3),var(--bg-panel));
+  border:1px solid var(--border);border-radius:var(--radius-m);
+  padding:16px;position:relative;overflow:hidden;
+}
+.player-card::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 100% 0%, rgba(22,227,122,.10), transparent 60%);
+}
+.pc-top{display:flex;align-items:center;gap:12px;position:relative;}
+.pc-avatar{
+  width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:26px;background:var(--bg-void);border:1px solid var(--border-strong);
+}
+.pc-name{font-size:20px;font-family:var(--font-display);}
+.pc-team{font-size:12px;color:var(--text-muted);}
+.pc-rating{
+  margin-inline-start:auto;font-family:var(--font-data);font-size:26px;color:var(--gold);
+}
+.pc-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:14px;position:relative;font-size:12px;}
+.pc-stat{display:flex;justify-content:space-between;padding:6px 8px;background:var(--bg-void);border-radius:8px;border:1px solid var(--border);}
+.pc-stat b{font-family:var(--font-data);color:var(--text);}
+.pc-level{
+  position:relative;margin-top:10px;height:6px;border-radius:4px;background:var(--bg-void);overflow:hidden;
+}
+.pc-level i{display:block;height:100%;background:linear-gradient(90deg,var(--pitch),var(--ice));}
+
+/* ---------------------------------------------------------------- STAT GRID */
+.stat-card{
+  background:var(--bg-panel-2);border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;display:flex;flex-direction:column;gap:4px;
+}
+.stat-card .icon{font-size:20px;}
+.stat-card .label{font-size:11px;color:var(--text-muted);font-weight:700;}
+.stat-card .value{font-family:var(--font-data);font-size:19px;}
+.stat-card .sub{font-size:11px;color:var(--text-dim);}
+
+/* ---------------------------------------------------------------- BADGES / MISC */
+.badge{
+  display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;
+  font-size:11px;font-weight:700;background:var(--bg-panel-3);border:1px solid var(--border-strong);
+}
+.badge-live{color:var(--pitch);border-color:rgba(22,227,122,.4);}
+.badge-done{color:var(--text-dim);}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;}
+
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-muted);}
+.empty-state .icon{font-size:44px;display:block;margin-bottom:10px;}
+
+/* ---------------------------------------------------------------- TOASTS */
+.eftm-toast-host{
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:200;
+  display:flex;flex-direction:column;gap:8px;align-items:center;width:min(92vw,380px);
+  pointer-events:none;
+}
+.eftm-toast{
+  display:flex;align-items:center;gap:8px;background:var(--bg-panel-3);
+  border:1px solid var(--border-strong);border-radius:12px;padding:10px 16px;
+  font-size:13px;font-weight:600;opacity:0;transform:translateY(-14px);
+  transition:all .3s ease;box-shadow:var(--shadow-soft);width:100%;
+  pointer-events:auto;
+}
+.eftm-toast.show{opacity:1;transform:translateY(0);}
+.eftm-toast-icon{font-size:16px;}
+
+/* ---------------------------------------------------------------- FX CANVAS */
+.eftm-fx-canvas{position:fixed;inset:0;pointer-events:none;z-index:180;}
+
+/* ---------------------------------------------------------------- CELEBRATION */
+.eftm-celebration{
+  position:fixed;inset:0;z-index:300;background:rgba(4,6,10,.88);
+  display:flex;align-items:center;justify-content:center;opacity:0;
+  transition:opacity .4s ease;padding:20px;pointer-events:none;
+}
+.eftm-celebration.show{opacity:1;pointer-events:auto;}
+.cel-content{
+  text-align:center;max-width:420px;width:100%;
+  transform:scale(.9);transition:transform .4s ease;
+}
+.eftm-celebration.show .cel-content{transform:scale(1);}
+.cel-trophy{font-size:80px;animation:trophy-spin 3.2s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(244,185,66,.6));}
+@keyframes trophy-spin{
+  0%,100%{transform:rotateY(0deg);}
+  50%{transform:rotateY(180deg);}
+}
+.cel-title{font-family:var(--font-display);font-size:22px;color:var(--text-muted);letter-spacing:4px;text-transform:uppercase;margin-top:6px;}
+.cel-champion{font-family:var(--font-display);font-size:42px;color:var(--gold);margin-top:2px;}
+.cel-podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin:22px 0;}
+.cel-pod{background:var(--bg-panel-3);border:1px solid var(--border-strong);border-radius:10px 10px 0 0;padding:14px 10px;font-size:26px;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.cel-pod span{font-size:11px;color:var(--text-muted);font-weight:700;}
+.pod-1{height:120px;justify-content:flex-start;padding-top:10px;background:linear-gradient(180deg,rgba(244,185,66,.18),var(--bg-panel-3));}
+.pod-2{height:92px;}
+.pod-3{height:76px;}
+.cel-awards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px;}
+.cel-award{background:var(--bg-panel-2);border:1px solid var(--border);border-radius:10px;padding:10px;font-size:20px;display:flex;flex-direction:column;gap:2px;}
+.cel-award span{font-size:10px;color:var(--text-muted);font-weight:700;}
+.cel-award b{font-size:13px;font-family:var(--font-body);}
+
+/* ---------------------------------------------------------------- DRAW MODAL */
+.eftm-draw{
+  position:fixed;inset:0;z-index:300;background:rgba(4,6,10,.9);
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease;
+  pointer-events:none;
+}
+.eftm-draw.show{opacity:1;pointer-events:auto;}
+.draw-card{text-align:center;}
+.draw-label{color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;font-size:12px;margin-bottom:10px;}
+.draw-name{
+  font-family:var(--font-display);font-size:54px;color:var(--pitch);
+  min-width:260px;padding:20px 30px;border:2px solid var(--border-strong);border-radius:16px;
+  background:var(--bg-panel-2);
+}
+
+/* ---------------------------------------------------------------- MATCH ROW */
+.match-row{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;
+  padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg-panel-2);
+  margin-bottom:8px;
+}
+.match-side{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;}
+.match-side.away{flex-direction:row-reverse;text-align:left;}
+.match-score{display:flex;align-items:center;gap:6px;justify-content:center;}
+.match-score input{width:46px;text-align:center;padding:8px 0;}
+.match-played .match-score-static{font-family:var(--font-data);font-size:20px;color:var(--pitch);}
+
+/* ---------------------------------------------------------------- responsive */
+@media (min-width:820px){
+  .eftm-nav{
+    top:0;bottom:auto;height:64px;border-top:none;border-bottom:1px solid var(--border);
+    max-width:1000px;left:50%;right:auto;transform:translateX(-50%);border-radius:0 0 16px 16px;
+  }
+  body{padding-bottom:20px;padding-top:calc(64px + 14px);}
+  .eftm-nav-item{flex-direction:row;font-size:13px;}
+  .hero h1{font-size:64px;}
+}
+
+</style>
+</head>
+<body>
+
+<div id="eftm-nav-host"></div>
+
+<main id="app">
+  <section class="eftm-view" data-view="home" style="display:none">
+<section class="hero">
+  <div class="hero-pitch-lines"></div>
+  <div class="floodlight"></div>
+  <div class="floodlight f2"></div>
+
+  <div class="hero-emblem">🏆</div>
+  <h1>eFootball Tournament Master</h1>
+  <div class="tagline">أدر بطولاتك… واصنع أسطورتك</div>
+
+  <div class="hero-rule"></div>
+
+  <nav class="squad-menu" id="home-menu">
+    <a href="#/tournament?action=new" class="squad-item">
+      <span class="squad-num">01</span>
+      <span class="squad-icon">➕</span>
+      <span class="squad-text"><b>بطولة جديدة</b><span>ابدأ بطولة أو موسم من الصفر</span></span>
+      <span class="squad-arrow">‹</span>
+    </a>
+    <a href="#/tournament?action=resume" class="squad-item">
+      <span class="squad-num">02</span>
+      <span class="squad-icon">▶</span>
+      <span class="squad-text"><b>استكمال بطولة</b><span id="home-resume-sub">تابع بطولة قائمة</span></span>
+      <span class="squad-arrow">‹</span>
+    </a>
+    <a href="#/history" class="squad-item">
+      <span class="squad-num">03</span>
+      <span class="squad-icon">📜</span>
+      <span class="squad-text"><b>سجل البطولات</b><span>البطولات والمواسم المنتهية</span></span>
+      <span class="squad-arrow">‹</span>
+    </a>
+    <a href="#/statistics" class="squad-item">
+      <span class="squad-num">04</span>
+      <span class="squad-icon">📊</span>
+      <span class="squad-text"><b>الإحصائيات</b><span>أكثر من 40 إحصائية شاملة</span></span>
+      <span class="squad-arrow">‹</span>
+    </a>
+    <a href="#/halloffame" class="squad-item">
+      <span class="squad-num">05</span>
+      <span class="squad-icon">🏅</span>
+      <span class="squad-text"><b>قاعة المشاهير</b><span>الأبطال والتصنيف الدائم</span></span>
+      <span class="squad-arrow">‹</span>
+    </a>
+    <a href="#/settings" class="squad-item">
+      <span class="squad-num">06</span>
+      <span class="squad-icon">⚙</span>
+      <span class="squad-text"><b>الإعدادات</b><span>المظهر، الصوت، النسخ الاحتياطي</span></span>
+      <span class="squad-arrow">‹</span>
+    </a>
+    <a href="#" class="squad-item" id="about-link">
+      <span class="squad-num">07</span>
+      <span class="squad-icon">❓</span>
+      <span class="squad-text"><b>عن الموقع</b><span>كل ما تحتاج معرفته</span></span>
+      <span class="squad-arrow">‹</span>
+    </a>
+  </nav>
+</section>
+
+
+
+<!-- About modal -->
+<div class="eftm-celebration" id="about-modal">
+  <div class="cel-content card" style="text-align:right;max-width:460px;">
+    <h2 style="font-size:28px;display:flex;align-items:center;gap:8px;">❓ عن eFootball Tournament Master</h2>
+    <p style="color:var(--text-muted);line-height:1.9;font-size:14px;margin-top:10px;">
+      منصّة كاملة لإدارة بطولات eFootball و FIFA بين أصدقائك: أنشئ بطولات دوري أو خروج المغلوب،
+      تابع الترتيب لحظة بلحظة، اجمع الإحصائيات، افتح الإنجازات، وارتقِ بمستوى لاعبيك عبر مواسم كاملة
+      تجمع عدة بطولات في تصنيف واحد. كل شيء يُحفظ تلقائيًا على جهازك، بلا إنترنت وبلا حساب.
+    </p>
+    <ul style="margin-top:14px;display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--text-muted);">
+      <li>⚽ نظام مواسم كامل بعدة بطولات وتصنيف موحد</li>
+      <li>🏴🇪🇸🇮🇹 دوريات عالمية بهوية ألوان وشعار خاص بكل دوري</li>
+      <li>📄 تصدير PDF / Excel وحفظ صورة للترتيب</li>
+      <li>🏆 حفل تتويج بالألعاب النارية والموسيقى</li>
+    </ul>
+    <button class="btn btn-primary btn-block" id="about-close" style="margin-top:18px;">حسنًا، فهمت</button>
+  </div>
+</div>
+  </section>
+
+  <section class="eftm-view" data-view="tournament" style="display:none">
+<div class="page" id="page-root">
+
+  <div class="page-header">
+    <div>
+      <a href="#/home" class="back-link">‹ الرئيسية</a>
+      <h1 class="page-title" id="page-title">🏆 البطولة</h1>
+      <div class="page-sub" id="page-subtitle">أنشئ بطولتك أو موسمك، وأدر كل التفاصيل من هنا</div>
+    </div>
+  </div>
+
+  <!-- ============================= CHOOSER ============================= -->
+  <section id="view-chooser" style="display:none">
+    <div class="grid grid-2">
+      <div class="card" style="text-align:center;cursor:pointer" id="choose-tournament">
+        <div style="font-size:38px">🏆</div>
+        <h3 style="margin-top:8px">بطولة واحدة</h3>
+        <p class="page-sub">دوري أو خروج مغلوب مستقل</p>
+      </div>
+      <div class="card" style="text-align:center;cursor:pointer" id="choose-season">
+        <div style="font-size:38px">📅</div>
+        <h3 style="margin-top:8px">موسم كامل</h3>
+        <p class="page-sub">عدة بطولات وتصنيف موسم موحد</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= CREATE TOURNAMENT ============================= -->
+  <section id="view-create" style="display:none">
+    <form id="form-create-tournament">
+      <div class="card">
+        <div class="field">
+          <label>اسم البطولة</label>
+          <input type="text" id="t-name" placeholder="مثال: بطولة الأصدقاء 2026" required>
+        </div>
+        <div class="field">
+          <label>شعار البطولة</label>
+          <div class="choice-grid" id="t-logo-grid"></div>
+        </div>
+        <div class="field">
+          <label>نوع البطولة</label>
+          <div class="choice-grid">
+            <div class="choice selected" data-type="league">🏁 دوري</div>
+            <div class="choice" data-type="cup">🏆 كأس / بطولة دولية</div>
+            <div class="choice" data-type="knockout">⚔ خروج مغلوب</div>
+          </div>
+        </div>
+
+        <div class="field" id="league-picker-wrap">
+          <label>اختر الدوري</label>
+          <div class="choice-grid" id="league-grid"></div>
+          <div id="custom-league-name-wrap" style="display:none;margin-top:10px;">
+            <label>اسم الدوري المخصص</label>
+            <input type="text" id="custom-league-name" placeholder="مثال: دوري الحي">
+          </div>
+        </div>
+
+        <div class="field" id="cup-picker-wrap" style="display:none;">
+          <label>اختر البطولة</label>
+          <div class="choice-grid" id="cup-grid"></div>
+          <div id="custom-cup-name-wrap" style="display:none;margin-top:10px;">
+            <label>اسم الكأس المخصص</label>
+            <input type="text" id="custom-cup-name" placeholder="مثال: كأس الحي">
+          </div>
+          <p class="page-sub" style="margin-top:10px;">🏆 هذه البطولات تُلعب دائمًا بنظام دور مجموعات ثم أدوار إقصائية (نهائي / نصف نهائي / دور 16...) حسب عدد اللاعبين — بدون اختيار دوري تقليدي.</p>
+        </div>
+
+        <div class="field" id="leg-mode-wrap">
+          <label>طريقة اللعب<span id="leg-mode-sub" style="font-weight:400;color:var(--text-dim);"></span></label>
+          <div class="choice-grid">
+            <div class="choice selected" data-leg="single">➡ ذهاب فقط</div>
+            <div class="choice" data-leg="double">🔁 ذهاب وإياب</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>عدد اللاعبين</label>
+          <input type="number" id="t-playercount" min="2" max="24" value="4">
+        </div>
+
+        <div class="field" id="points-system-wrap">
+          <label>نظام النقاط (فوز / تعادل / خسارة)</label>
+          <div style="display:flex;gap:8px">
+            <input type="number" id="pt-win" value="3" min="0">
+            <input type="number" id="pt-draw" value="1" min="0">
+            <input type="number" id="pt-loss" value="0" min="0">
+          </div>
+        </div>
+
+        <div class="field" id="bonus-points-wrap">
+          <label>نقاط إضافية (اختياري)</label>
+          <div class="choice-grid">
+            <div class="choice" data-bonus="fiveGoals">⭐ 5 أهداف فأكثر = +1 نقطة</div>
+            <div class="choice" data-bonus="cleanSheet">🧤 مرمى نظيف = +2 نقطة</div>
+          </div>
+          <p class="page-sub" style="margin-top:6px;">تقدر تفعّل الاثنين مع بعض.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+          <label style="margin:0;">اللاعبون المشاركون</label>
+          <button type="button" class="btn btn-sm btn-danger" id="open-delete-players-btn">🗑 حذف لاعبين</button>
+        </div>
+        <div class="field" style="margin-top:8px">
+          <input type="text" id="player-search" placeholder="🔍 ابحث عن لاعب موجود...">
+        </div>
+        <div class="choice-grid" id="existing-players-grid"></div>
+
+        <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+          <label>إضافة لاعب جديد</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <input type="text" id="new-player-name" placeholder="اسم اللاعب" style="flex:2;min-width:120px">
+            <input type="text" id="new-player-team" placeholder="الفريق (مثال: ريال مدريد)" style="flex:2;min-width:120px">
+            <button type="button" class="btn btn-sm" id="add-player-btn">➕ إضافة</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div class="page-sub">تم اختيار: <b id="selected-count" class="num">0</b> / <span id="target-count" class="num">4</span></div>
+          <div class="pill-row" id="selected-pills" style="margin-top:8px"></div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">🎲 إنشاء البطولة وبدء القرعة</button>
+    </form>
+  </section>
+
+  <!-- ============================= CREATE SEASON ============================= -->
+  <section id="view-season" style="display:none">
+    <div class="card">
+      <div class="field">
+        <label>اسم الموسم</label>
+        <input type="text" id="s-name" placeholder="مثال: الموسم الأول" value="الموسم الأول">
+      </div>
+      <label>بطولات الموسم</label>
+      <div id="season-tournaments-list" style="display:flex;flex-direction:column;gap:8px;margin-top:8px;"></div>
+      <button type="button" class="btn btn-sm" id="add-season-tournament" style="margin-top:10px;">➕ إضافة بطولة للموسم</button>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+        <label style="margin:0;">لاعبو الموسم (يشاركون في كل بطولات الموسم)</label>
+        <button type="button" class="btn btn-sm btn-danger" id="open-delete-players-btn-season">🗑 حذف لاعبين</button>
+      </div>
+      <div class="field" style="margin-top:8px">
+        <input type="text" id="season-player-search" placeholder="🔍 ابحث عن لاعب موجود...">
+      </div>
+      <div class="choice-grid" id="season-existing-players-grid"></div>
+      <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input type="text" id="season-new-player-name" placeholder="اسم لاعب جديد" style="flex:2;min-width:120px">
+          <input type="text" id="season-new-player-team" placeholder="الفريق" style="flex:2;min-width:120px">
+          <button type="button" class="btn btn-sm" id="season-add-player-btn">➕ إضافة</button>
+        </div>
+      </div>
+      <div class="pill-row" id="season-selected-pills" style="margin-top:12px"></div>
+    </div>
+
+    <button class="btn btn-primary btn-block" id="create-season-btn">🚀 إنشاء الموسم وكل بطولاته</button>
+  </section>
+
+  <!-- ============================= RESUME LIST ============================= -->
+  <section id="view-resume" style="display:none">
+    <div class="section">
+      <div class="section-title">▶ بطولات جارية</div>
+      <div id="resume-tournaments-list"></div>
+    </div>
+    <div class="section">
+      <div class="section-title">📅 مواسم جارية</div>
+      <div id="resume-seasons-list"></div>
+    </div>
+  </section>
+
+  <!-- ============================= MANAGE TOURNAMENT ============================= -->
+  <section id="view-manage" style="display:none">
+    <div id="season-nav-host"></div>
+
+    <div class="card" id="manage-header-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div>
+          <div id="manage-logo"></div>
+          <h2 id="manage-name" style="font-size:26px;margin-top:4px;"></h2>
+          <div class="pill-row" style="margin-top:6px;">
+            <span class="badge badge-live" id="manage-status-badge">جارية</span>
+            <span class="badge" id="manage-type-badge"></span>
+            <span class="badge" id="manage-leg-badge"></span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-sm" id="export-pdf-btn">📄 PDF</button>
+          <button class="btn btn-sm" id="export-excel-btn">📊 Excel</button>
+          <button class="btn btn-sm" id="export-img-btn">🖼 صورة</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pill-row" style="margin:14px 0;">
+      <button class="btn btn-sm" data-tab="fixtures">⚽ المباريات</button>
+      <button class="btn btn-sm" data-tab="standings">📋 الترتيب</button>
+      <button class="btn btn-sm" data-tab="roster">👥 اللاعبون</button>
+    </div>
+
+    <div id="tab-fixtures" class="tab-panel"></div>
+    <div id="tab-standings" class="tab-panel" style="display:none"></div>
+    <div id="tab-roster" class="tab-panel" style="display:none"></div>
+
+    <div class="card" id="complete-card" style="margin-top:20px;text-align:center;">
+      <p class="page-sub" id="complete-hint">أكمل جميع المباريات لإنهاء البطولة وبدء حفل التتويج 🏆</p>
+      <button class="btn btn-gold btn-block" id="complete-tournament-btn" disabled>🏆 إنهاء البطولة والاحتفال</button>
+    </div>
+
+    <div class="card" style="margin-top:12px;text-align:center;">
+      <p class="page-sub" style="color:var(--crimson);">حذف هذه البطولة نهائيًا (مفيد لو كانت للتجربة فقط) — لا يمكن التراجع عن هذا الإجراء.</p>
+      <button class="btn btn-danger btn-block" id="delete-tournament-btn">🗑 حذف البطولة</button>
+    </div>
+  </section>
+
+</div>
+  </section>
+
+  <section class="eftm-view" data-view="leaderboard" style="display:none">
+<div class="page">
+  <div class="page-header">
+    <div>
+      <a href="#/home" class="back-link">‹ الرئيسية</a>
+      <h1 class="page-title">📋 جدول الترتيب</h1>
+      <div class="page-sub">تابع الترتيب لحظة بلحظة مع مؤشرات الصعود والهبوط</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <label>اختر البطولة أو الموسم</label>
+    <select id="picker"></select>
+  </div>
+
+  <div class="field" style="margin-top:14px;">
+    <input type="text" id="board-search" placeholder="🔍 ابحث باسم اللاعب أو الفريق...">
+  </div>
+
+  <div class="card" id="board-capture" style="margin-top:14px;">
+    <table class="standings-table" id="board-table">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="pill-row" style="margin-top:14px;">
+    <button class="btn btn-sm" id="export-pdf">📄 PDF</button>
+    <button class="btn btn-sm" id="export-excel">📊 Excel</button>
+    <button class="btn btn-sm" id="export-img">🖼 حفظ صورة</button>
+  </div>
+</div>
+  </section>
+
+  <section class="eftm-view" data-view="statistics" style="display:none">
+<div class="page">
+  <div class="page-header">
+    <div>
+      <a href="#/home" class="back-link">‹ الرئيسية</a>
+      <h1 class="page-title">📊 الإحصائيات</h1>
+      <div class="page-sub">أكثر من 40 إحصائية شاملة عبر كل بطولاتك</div>
+    </div>
+  </div>
+
+  <div class="field">
+    <input type="text" id="stats-search" placeholder="🔍 ابحث في الإحصائيات...">
+  </div>
+
+  <div class="section">
+    <div class="section-title">🌍 إحصائيات عامة <small>كل البطولات مجتمعة</small></div>
+    <div class="grid grid-2" id="global-stats"></div>
+  </div>
+
+  <div class="section" id="per-tournament-section" style="display:none">
+    <div class="section-title">🏆 إحصائيات بطولة محددة</div>
+    <select id="trn-picker" style="margin-bottom:12px;"></select>
+    <div class="grid grid-2" id="trn-stats"></div>
+  </div>
+
+  <div class="section" id="chart-section" style="display:none">
+    <div class="section-title">📈 أفضل الهدافين</div>
+    <div class="card"><canvas id="scorers-chart" height="180"></canvas></div>
+  </div>
+</div>
+  </section>
+
+  <section class="eftm-view" data-view="history" style="display:none">
+<div class="page">
+  <div class="page-header">
+    <div>
+      <a href="#/home" class="back-link">‹ الرئيسية</a>
+      <h1 class="page-title">📜 سجل البطولات</h1>
+      <div class="page-sub">أرشيف كل البطولات والمواسم المنتهية</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+    <input type="text" id="hist-search" placeholder="🔍 ابحث بالاسم..." style="flex:2;min-width:160px;">
+    <select id="filter-type" style="flex:1;min-width:130px;">
+      <option value="all">الكل</option>
+      <option value="league">🏁 دوري</option>
+      <option value="knockout">⚔ خروج مغلوب</option>
+    </select>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📅 المواسم المكتملة</div>
+    <div id="seasons-list"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🏆 البطولات المكتملة</div>
+    <div id="trn-list"></div>
+  </div>
+</div>
+  </section>
+
+  <section class="eftm-view" data-view="settings" style="display:none">
+<div class="page">
+  <div class="page-header">
+    <div>
+      <a href="#/home" class="back-link">‹ الرئيسية</a>
+      <h1 class="page-title">⚙ الإعدادات</h1>
+      <div class="page-sub">خصص تجربتك واحفظ بياناتك</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="font-size:16px;">🎨 المظهر</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+      <span>الوضع الليلي / الفاتح</span>
+      <button class="btn btn-sm" id="theme-toggle">🌙 ليلي</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="font-size:16px;">🔊 الصوت والتأثيرات</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+      <span>الأصوات</span>
+      <button class="btn btn-sm" id="sound-toggle">🔔 مفعّل</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+      <span>التأثيرات البصرية (كونفيتي، ألعاب نارية)</span>
+      <button class="btn btn-sm" id="fx-toggle">✨ مفعّل</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="font-size:16px;">💾 النسخ الاحتياطي</div>
+    <p class="page-sub">كل بياناتك محفوظة تلقائيًا على جهازك فقط. يمكنك تصدير نسخة احتياطية أو استعادتها.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <button class="btn btn-sm btn-primary" id="export-backup">⬇ تصدير نسخة احتياطية</button>
+      <button class="btn btn-sm" id="import-backup-btn">⬆ استيراد نسخة</button>
+      <input type="file" id="import-file" accept="application/json" style="display:none;">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="font-size:16px;">🔔 آخر الإشعارات</div>
+    <div id="notif-list"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="font-size:16px;color:var(--crimson);">⚠ منطقة الخطر</div>
+    <p class="page-sub">حذف كل البيانات (اللاعبين، البطولات، المواسم) بشكل نهائي.</p>
+    <button class="btn btn-danger btn-block" id="reset-btn" style="margin-top:10px;">🗑 حذف كل البيانات</button>
+  </div>
+</div>
+  </section>
+
+  <section class="eftm-view" data-view="halloffame" style="display:none">
+<div class="page">
+  <div class="page-header">
+    <div>
+      <a href="#/home" class="back-link">‹ الرئيسية</a>
+      <h1 class="page-title">🏅 قاعة المشاهير</h1>
+      <div class="page-sub">الأساطير الذين حفروا اسمهم في تاريخ الموقع</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">👑 التصنيف الدائم</div>
+    <div class="card" id="rankings-card"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📅 أبطال المواسم</div>
+    <div id="season-champs"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🏆 أبطال البطولات</div>
+    <div id="trn-champs"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🎖 الإنجازات</div>
+    <div class="grid grid-2" id="achievements-grid"></div>
+  </div>
+</div>
+  </section>
+</main>
+
+<script>
+/* ============================================================================
+   1) DATA LAYER (database.js)
+   ============================================================================ */
+/* ============================================================================
+   eFootball Tournament Master — database.js
+   Local data layer. Everything is persisted to localStorage (auto-save).
+   No backend required — this file IS the database.
+   ============================================================================ */
+
+const DB_KEY = "eftm_database_v1";
+
+/* ---------------------------------------------------------------------------
+   League catalogue — each league carries its own identity (colors, trophy,
+   emblem). Selecting "league" as a tournament type asks for one of these.
+--------------------------------------------------------------------------- */
+const LEAGUES = [
+  { id: "epl",     name: "الدوري الإنجليزي الممتاز", flag: "🏴",  trophy: "🏆",
+    colors: { primary: "#3D0C5F", secondary: "#B400E0", accent: "#F5C518" } },
+  { id: "laliga",  name: "الدوري الإسباني",           flag: "🇪🇸", trophy: "🏆",
+    colors: { primary: "#8B0F16", secondary: "#EE2737", accent: "#FFB400" } },
+  { id: "seriea",  name: "الدوري الإيطالي",           flag: "🇮🇹", trophy: "🏆",
+    colors: { primary: "#00385E", secondary: "#0090D4", accent: "#3AC7A0" } },
+  { id: "bundes",  name: "الدوري الألماني",           flag: "🇩🇪", trophy: "🏆",
+    colors: { primary: "#8A0303", secondary: "#D3010C", accent: "#F5C518" } },
+  { id: "ligue1",  name: "الدوري الفرنسي",            flag: "🇫🇷", trophy: "🏆",
+    colors: { primary: "#091C3E", secondary: "#1E64C8", accent: "#DAE025" } },
+  { id: "roshn",   name: "دوري روشن السعودي",         flag: "🇸🇦", trophy: "🏆",
+    colors: { primary: "#0B3D2E", secondary: "#1B8A5A", accent: "#F5C518" } },
+  { id: "egypt",   name: "الدوري المصري",             flag: "🇪🇬", trophy: "🏆",
+    colors: { primary: "#3A0A0A", secondary: "#C8102E", accent: "#F5C518" } },
+  { id: "mls",     name: "الدوري الأمريكي",           flag: "🇺🇸", trophy: "🏆",
+    colors: { primary: "#0A1E3F", secondary: "#B0192A", accent: "#5FA8FF" } },
+  { id: "liga_pt", name: "الدوري البرتغالي",          flag: "🇵🇹", trophy: "🏆",
+    colors: { primary: "#0B4B2E", secondary: "#1B8A4A", accent: "#F5C518" } },
+  { id: "eredivi", name: "الدوري الهولندي",           flag: "🇳🇱", trophy: "🏆",
+    colors: { primary: "#B3400A", secondary: "#FF6A00", accent: "#1E1E1E" } },
+  { id: "custom",  name: "دوري مخصص",                 flag: "🌍", trophy: "🏆",
+    colors: { primary: "#0E3A5F", secondary: "#16E37A", accent: "#F4B942" } },
+];
+
+/* ---------------------------------------------------------------------------
+   Cup catalogue — international / continental competitions. These always
+   use the group-stage + knockout format (never plain round-robin), matching
+   how real-world tournaments like the World Cup actually work.
+--------------------------------------------------------------------------- */
+const CUPS = [
+  { id: "world_cup", name: "كأس العالم",               flag: "🌍", trophy: "🏆",
+    colors: { primary: "#0A2F5C", secondary: "#F4B942", accent: "#EE2737" } },
+  { id: "champions", name: "دوري أبطال أوروبا",         flag: "⭐", trophy: "🏆",
+    colors: { primary: "#0A0F3D", secondary: "#4FD6FF", accent: "#F4B942" } },
+  { id: "euro",       name: "يورو",                     flag: "🇪🇺", trophy: "🏆",
+    colors: { primary: "#0B3D6B", secondary: "#16E37A", accent: "#F4B942" } },
+  { id: "custom_cup", name: "كأس مخصص",                 flag: "🏆", trophy: "🏆",
+    colors: { primary: "#3D0C5F", secondary: "#B400E0", accent: "#F4B942" } },
+];
+
+/* Default theme used outside any league context */
+const DEFAULT_THEME = { primary: "#0E3A5F", secondary: "#16E37A", accent: "#F4B942" };
+
+/* Level thresholds (XP required to reach level N) */
+function xpForLevel(level) { return Math.round(100 * Math.pow(level, 1.55)); }
+
+/* Achievement catalogue */
+const ACHIEVEMENTS = [
+  { id: "first_title",   name: "أول بطولة",        desc: "فز ببطولتك الأولى",              icon: "🏆", check: p => p.career.tournamentsWon >= 1 },
+  { id: "hattrick_king", name: "ملك الثلاثيات",     desc: "سجل هاتريك في مباراة واحدة",      icon: "🎩", check: p => p.career.hattricks >= 1 },
+  { id: "five_star",     name: "ملك الخماسيات",     desc: "سجل 5 أهداف في مباراة واحدة",     icon: "🌟", check: p => p.career.fiveStars >= 1 },
+  { id: "century",       name: "المئوية",           desc: "سجل 100 هدف في مسيرتك",           icon: "💯", check: p => p.career.goals >= 100 },
+  { id: "wall",          name: "الجدار",            desc: "حقق 20 شباك نظيفة",               icon: "🧱", check: p => p.career.cleanSheets >= 20 },
+  { id: "unstoppable",   name: "لا يُقهر",          desc: "فز في 10 مباريات متتالية",        icon: "🔥", check: p => p.career.bestWinStreak >= 10 },
+  { id: "veteran",       name: "المخضرم",           desc: "العب 100 مباراة",                 icon: "🎖", check: p => p.career.matchesPlayed >= 100 },
+  { id: "legend",        name: "أسطورة",            desc: "فز بـ 5 بطولات",                  icon: "👑", check: p => p.career.tournamentsWon >= 5 },
+  { id: "goal_machine",  name: "آلة الأهداف",       desc: "معدل هدف واحد لكل مباراة على الأقل", icon: "⚽", check: p => p.career.matchesPlayed >= 10 && (p.career.goals / Math.max(1, p.career.matchesPlayed)) >= 1 },
+  { id: "level_10",      name: "نجم صاعد",          desc: "وصل للمستوى 10",                  icon: "📈", check: p => p.level >= 10 },
+  { id: "level_25",      name: "نخبة",              desc: "وصل للمستوى 25",                  icon: "💎", check: p => p.level >= 25 },
+];
+
+/* ---------------------------------------------------------------------------
+   Storage
+--------------------------------------------------------------------------- */
+function emptyDB() {
+  return {
+    players: [],
+    tournaments: [],
+    seasons: [],
+    settings: { theme: "dark", sound: true, effects: true },
+    notifications: [],
+    createdAt: Date.now(),
+  };
+}
+
+let _db = null;
+
+function loadDB() {
+  if (_db) return _db;
+  try {
+    const raw = localStorage.getItem(DB_KEY);
+    _db = raw ? JSON.parse(raw) : emptyDB();
+  } catch (e) {
+    console.error("DB load failed, resetting.", e);
+    _db = emptyDB();
+  }
+  // migrations / defaults for older saves
+  if (!_db.settings) _db.settings = { theme: "dark", sound: true, effects: true };
+  if (!_db.seasons) _db.seasons = [];
+  if (!_db.notifications) _db.notifications = [];
+  return _db;
+}
+
+function saveDB() {
+  if (!_db) return;
+  localStorage.setItem(DB_KEY, JSON.stringify(_db));
+  pushRemoteDB(); // no-op if remote sync isn't configured
+}
+
+/* ---------------------------------------------------------------------------
+   OPTIONAL: Shared live sync via Firebase Realtime Database.
+   Disabled by default (pure offline/local mode) unless initRemoteSync() is
+   called with a real Firebase config. When enabled, every saveDB() also
+   pushes the whole DB blob to Firebase, and every visitor listening on the
+   same database sees updates live — this is what makes tournaments shared
+   across friends instead of stuck on one device.
+--------------------------------------------------------------------------- */
+const _remoteSync = { enabled: false, ref: null, justSavedLocally: false, onRemoteChange: null };
+
+function pushRemoteDB() {
+  if (!_remoteSync.enabled || !_remoteSync.ref) return;
+  _remoteSync.justSavedLocally = true;
+  setTimeout(() => { _remoteSync.justSavedLocally = false; }, 1500);
+  try {
+    _remoteSync.ref.set(_db).catch(err => console.error("Remote save failed:", err));
+  } catch (err) {
+    console.error("Remote save failed:", err);
+  }
+}
+
+/* initRemoteSync(firebaseConfig, onReady, onRemoteChange)
+   - firebaseConfig: the config object from Firebase console
+   - onReady: called once, after the first remote read completes
+   - onRemoteChange: called every time a genuinely new remote update arrives
+     (i.e. made by someone else, not an echo of our own last write) */
+function initRemoteSync(firebaseConfig, onReady, onRemoteChange) {
+  try {
+    firebase.initializeApp(firebaseConfig);
+    _remoteSync.ref = firebase.database().ref("eftm_shared_db");
+    _remoteSync.onRemoteChange = onRemoteChange;
+
+    _remoteSync.ref.once("value").then(snap => {
+      const remote = snap.val();
+      if (remote) {
+        _db = remote;
+        if (!_db.settings) _db.settings = { theme: "dark", sound: true, effects: true };
+        if (!_db.seasons) _db.seasons = [];
+        if (!_db.notifications) _db.notifications = [];
+      } else {
+        _db = loadDB(); // nothing on the server yet — seed it with local/empty state
+        _remoteSync.ref.set(_db);
+      }
+      _remoteSync.enabled = true;
+      onReady();
+
+      _remoteSync.ref.on("value", snap2 => {
+        const data = snap2.val();
+        if (!data) return;
+        _db = data;
+        localStorage.setItem(DB_KEY, JSON.stringify(_db));
+        if (!_remoteSync.justSavedLocally && _remoteSync.onRemoteChange) {
+          _remoteSync.onRemoteChange();
+        }
+      });
+    }).catch(err => {
+      console.error("Firebase initial read failed:", err);
+      onReady(); // fall back to local-only mode so the app still opens
+    });
+  } catch (err) {
+    console.error("Firebase init failed:", err);
+    onReady();
+  }
+}
+
+function uid(prefix) {
+  return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+/* ---------------------------------------------------------------------------
+   Notifications (simple persisted feed + used for on-screen toasts)
+--------------------------------------------------------------------------- */
+function pushNotification(text, icon) {
+  const db = loadDB();
+  db.notifications.unshift({ id: uid("ntf"), text, icon: icon || "🔔", time: Date.now(), read: false });
+  db.notifications = db.notifications.slice(0, 100);
+  saveDB();
+  if (typeof window !== "undefined" && window.EFTM_UI && window.EFTM_UI.toast) {
+    window.EFTM_UI.toast(text, icon);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Players
+--------------------------------------------------------------------------- */
+function blankCareer() {
+  return {
+    tournamentsPlayed: 0, tournamentsWon: 0,
+    matchesPlayed: 0, wins: 0, draws: 0, losses: 0,
+    goals: 0, goalsConceded: 0, cleanSheets: 0,
+    hattricks: 0, fiveStars: 0,
+    biggestWin: null, // {score:"5-0", opponent, date}
+    currentWinStreak: 0, bestWinStreak: 0,
+    currentUnbeatenStreak: 0, bestUnbeatenStreak: 0,
+    bonusCount: 0,
+    achievements: [],
+  };
+}
+
+function createPlayer({ name, team, avatar }) {
+  const db = loadDB();
+  const player = {
+    id: uid("plr"),
+    name: name.trim(),
+    team: (team || "").trim(),
+    avatar: avatar || "👤",
+    level: 1,
+    xp: 0,
+    career: blankCareer(),
+    createdAt: Date.now(),
+  };
+  db.players.push(player);
+  saveDB();
+  return player;
+}
+
+function getPlayer(id) {
+  return loadDB().players.find(p => p.id === id);
+}
+
+function allPlayers() {
+  return loadDB().players.slice().sort((a, b) => a.name.localeCompare(b.name, "ar"));
+}
+
+function deletePlayer(id) {
+  const db = loadDB();
+  const player = db.players.find(p => p.id === id);
+  db.players = db.players.filter(p => p.id !== id);
+  // remove from every tournament's roster so standings/fixtures never
+  // reference a ghost id — matches already played keep their recorded
+  // scores (career stats are fully recomputed below), only the roster
+  // membership and any *unplayed* fixtures involving this player are cleared
+  db.tournaments.forEach(t => {
+    t.playerIds = t.playerIds.filter(pid => pid !== id);
+    t.matches = t.matches.filter(m => {
+      const involvesPlayer = m.homeId === id || m.awayId === id;
+      return !involvesPlayer || m.played; // drop only unplayed fixtures
+    });
+  });
+  saveDB();
+  recomputeCareerStatsForTournament();
+  if (player) pushNotification(`تم حذف اللاعب: ${player.name} 🗑`, "🗑");
+}
+
+/* Returns the list of tournaments (any status) a player currently appears
+   in — used to warn before deleting a player who has match history. */
+function tournamentsInvolvingPlayer(id) {
+  return loadDB().tournaments.filter(t => t.playerIds.includes(id));
+}
+
+function addXP(player, amount) {
+  player.xp += amount;
+  let leveled = false;
+  while (player.xp >= xpForLevel(player.level)) {
+    player.xp -= xpForLevel(player.level);
+    player.level += 1;
+    leveled = true;
+  }
+  if (leveled) pushNotification(`${player.name} وصل إلى المستوى ${player.level}! 📈`, "📈");
+  return leveled;
+}
+
+function checkAchievements(player) {
+  const unlocked = [];
+  ACHIEVEMENTS.forEach(a => {
+    if (!player.career.achievements.includes(a.id) && a.check(player)) {
+      player.career.achievements.push(a.id);
+      unlocked.push(a);
+      pushNotification(`إنجاز جديد: ${a.name} ${a.icon}`, a.icon);
+      addXP(player, 50);
+    }
+  });
+  return unlocked;
+}
+
+/* ---------------------------------------------------------------------------
+   Fixture generation (round robin — single or double leg)
+--------------------------------------------------------------------------- */
+function generateRoundRobin(playerIds, doubleLeg) {
+  let ids = playerIds.slice();
+  let bye = null;
+  if (ids.length % 2 !== 0) { bye = "__BYE__"; ids.push(bye); }
+  const n = ids.length;
+  const rounds = n - 1;
+  const half = n / 2;
+  let arr = ids.slice();
+  const matches = [];
+  for (let r = 0; r < rounds; r++) {
+    for (let i = 0; i < half; i++) {
+      const home = arr[i];
+      const away = arr[n - 1 - i];
+      if (home !== bye && away !== bye) {
+        matches.push({ id: uid("m"), round: r + 1, homeId: home, awayId: away, homeGoals: null, awayGoals: null, played: false, leg: 1 });
+      }
+    }
+    // rotate (keep first fixed)
+    const fixed = arr[0];
+    const rest = arr.slice(1);
+    rest.unshift(rest.pop());
+    arr = [fixed, ...rest];
+  }
+  if (doubleLeg) {
+    const secondLeg = matches.map(m => ({
+      id: uid("m"), round: m.round + rounds, homeId: m.awayId, awayId: m.homeId,
+      homeGoals: null, awayGoals: null, played: false, leg: 2,
+    }));
+    return matches.concat(secondLeg);
+  }
+  return matches;
+}
+
+/* ---------------------------------------------------------------------------
+   Cup format (World Cup / Champions League / Euro style): group stage,
+   then a knockout bracket sized automatically from the qualifier count so
+   it always lands on a clean round (final, semis, quarters, round of 16...).
+--------------------------------------------------------------------------- */
+function decideCupStructure(playerCount) {
+  if (playerCount <= 5) return { numGroups: 1, qualifiersPerGroup: 2 };   // -> final only
+  if (playerCount <= 9) return { numGroups: 2, qualifiersPerGroup: 2 };   // -> semifinal + final
+  if (playerCount <= 17) return { numGroups: 4, qualifiersPerGroup: 2 };  // -> quarterfinals+
+  if (playerCount <= 33) return { numGroups: 8, qualifiersPerGroup: 2 };  // -> round of 16+
+  return { numGroups: 16, qualifiersPerGroup: 2 };                        // -> round of 32+
+}
+
+function generateCupGroups(playerIds) {
+  const real = playerIds.filter(id => id !== "__BYE__");
+  const { numGroups, qualifiersPerGroup } = decideCupStructure(real.length);
+  const shuffled = shuffle(real);
+  const groups = Array.from({ length: numGroups }, (_, i) => ({
+    name: `المجموعة ${String.fromCharCode(65 + i)}`,
+    playerIds: [],
+  }));
+  shuffled.forEach((id, idx) => groups[idx % numGroups].playerIds.push(id));
+  return { groups, qualifiersPerGroup };
+}
+
+function generateCupMatches(groups, legMode) {
+  const matches = [];
+  groups.forEach((g, gi) => {
+    const groupMatches = generateRoundRobin(g.playerIds, legMode === "double");
+    groupMatches.forEach(m => { m.stage = "group"; m.groupIndex = gi; });
+    matches.push(...groupMatches);
+  });
+  return matches;
+}
+
+function isGroupStageComplete(t) {
+  if (t.type !== "cup") return true;
+  const groupMatches = t.matches.filter(m => m.stage === "group");
+  return groupMatches.length > 0 && groupMatches.every(m => m.played);
+}
+
+/* Once every group match is played, seed the top finishers from each group
+   into a knockout bracket (reusing the same bracket engine as plain
+   knockout tournaments). No-ops if the bracket already exists. */
+function progressCupFromGroupsToKnockout(t) {
+  if (t.type !== "cup" || !isGroupStageComplete(t)) return;
+  if (t.matches.some(m => m.stage === "knockout")) return;
+  let qualifiers = [];
+  t.groups.forEach((g, gi) => {
+    const standings = computeGroupStandings(t, gi);
+    qualifiers.push(...standings.slice(0, t.qualifiersPerGroup || 2).map(r => r.id));
+  });
+  const koMatches = generateKnockout(qualifiers);
+  t.matches.push(...koMatches);
+  pushNotification(`انتهى دور المجموعات! بدأ الدور الإقصائي ⚔`, "⚔");
+}
+
+/* ---------------------------------------------------------------------------
+   Shared standings engine — used for plain league tables, cup group
+   tables, and the (largely cosmetic) knockout standings view. Bonus points
+   (5+ goals scored, clean sheet) apply only when explicitly enabled on the
+   tournament's points system.
+--------------------------------------------------------------------------- */
+function computeStandingsFromMatches(playerIds, matches, pointsSystem) {
+  const pts = pointsSystem || { win: 3, draw: 1, loss: 0 };
+  const table = {};
+  playerIds.filter(id => id !== "__BYE__").forEach(id => {
+    table[id] = { id, played: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
+  });
+  matches.filter(m => m.played && m.homeId && m.awayId && m.homeId !== "__BYE__" && m.awayId !== "__BYE__").forEach(m => {
+    const h = table[m.homeId], a = table[m.awayId];
+    if (!h || !a) return;
+    h.played++; a.played++;
+    h.gf += m.homeGoals; h.ga += m.awayGoals;
+    a.gf += m.awayGoals; a.ga += m.homeGoals;
+    if (m.homeGoals > m.awayGoals) { h.w++; h.pts += pts.win; a.l++; a.pts += pts.loss; }
+    else if (m.homeGoals < m.awayGoals) { a.w++; a.pts += pts.win; h.l++; h.pts += pts.loss; }
+    else if (m.penaltyWinner === m.homeId) { h.w++; h.pts += pts.win; a.l++; a.pts += pts.loss; }
+    else if (m.penaltyWinner === m.awayId) { a.w++; a.pts += pts.win; h.l++; h.pts += pts.loss; }
+    else { h.d++; a.d++; h.pts += pts.draw; a.pts += pts.draw; }
+    if (pts.bonusFiveGoals) {
+      if (m.homeGoals >= 5) h.pts += 1;
+      if (m.awayGoals >= 5) a.pts += 1;
+    }
+    if (pts.bonusCleanSheet) {
+      if (m.awayGoals === 0) h.pts += 2;
+      if (m.homeGoals === 0) a.pts += 2;
+    }
+  });
+  Object.values(table).forEach(r => (r.gd = r.gf - r.ga));
+  const rows = Object.values(table).sort((x, y) => y.pts - x.pts || y.gd - x.gd || y.gf - x.gf);
+  rows.forEach((r, i) => (r.rank = i + 1));
+  return rows;
+}
+
+function computeGroupStandings(t, groupIndex) {
+  if (!t.groups || !t.groups[groupIndex]) return [];
+  const group = t.groups[groupIndex];
+  const groupMatches = t.matches.filter(m => m.stage === "group" && m.groupIndex === groupIndex);
+  return computeStandingsFromMatches(group.playerIds, groupMatches, t.pointsSystem);
+}
+
+function generateKnockout(playerIds) {
+  // simple single-elimination bracket, byes if not power of 2
+  let ids = shuffle(playerIds.slice());
+  let size = 1;
+  while (size < ids.length) size *= 2;
+  while (ids.length < size) ids.push(null); // bye
+  const matches = [];
+  for (let i = 0; i < ids.length; i += 2) {
+    const homeId = ids[i], awayId = ids[i + 1];
+    const isBye = !homeId || !awayId;
+    matches.push({
+      id: uid("m"), round: 1, homeId, awayId,
+      homeGoals: null, awayGoals: null, played: isBye, leg: 1,
+      bracketSlot: i / 2, isBye, byeWinner: isBye ? (homeId || awayId) : null,
+      penaltyWinner: null, stage: "knockout",
+    });
+  }
+  return matches;
+}
+
+/* Determine the winner of a single knockout match, or null if undecided. */
+function knockoutWinner(m) {
+  if (m.isBye) return m.byeWinner;
+  if (!m.played) return null;
+  if (m.homeGoals > m.awayGoals) return m.homeId;
+  if (m.awayGoals > m.homeGoals) return m.awayId;
+  return m.penaltyWinner || null; // draw: needs a penalty-shootout winner to proceed
+}
+
+/* After a knockout match is decided, generate the next round once the whole
+   current round is resolved, or crown the champion once one player remains.
+   Works for both plain knockout tournaments and the knockout phase of a
+   cup tournament (filters strictly by stage so group matches never interfere). */
+function progressKnockout(t) {
+  const koMatches = t.matches.filter(m => m.stage === "knockout");
+  if (!koMatches.length) return;
+  const maxRound = koMatches.reduce((m, x) => Math.max(m, x.round), 1);
+  const roundMatches = koMatches.filter(m => m.round === maxRound);
+  if (!roundMatches.length || !roundMatches.every(m => knockoutWinner(m) !== null)) return;
+
+  const winners = roundMatches
+    .slice()
+    .sort((a, b) => a.bracketSlot - b.bracketSlot)
+    .map(m => knockoutWinner(m));
+
+  if (winners.length === 1) {
+    t.knockoutChampion = winners[0];
+    const finalMatch = roundMatches[0];
+    t.knockoutRunnerUp = finalMatch.homeId === winners[0] ? finalMatch.awayId : finalMatch.homeId;
+    return;
+  }
+  const nextRoundExists = koMatches.some(m => m.round === maxRound + 1);
+  if (nextRoundExists) return;
+  for (let i = 0; i < winners.length; i += 2) {
+    const homeId = winners[i], awayId = winners[i + 1];
+    t.matches.push({
+      id: uid("m"), round: maxRound + 1, homeId, awayId,
+      homeGoals: null, awayGoals: null, played: false, leg: 1,
+      bracketSlot: i / 2, isBye: false, byeWinner: null, penaltyWinner: null, stage: "knockout",
+    });
+  }
+}
+
+/* Remove any bracket rounds generated after `round` — used when a result is
+   edited/cleared so the bracket stays consistent. Only touches knockout-stage
+   matches; group-stage matches (if any) are left untouched. */
+function pruneKnockoutAfterRound(t, round) {
+  t.matches = t.matches.filter(m => m.stage !== "knockout" || m.round <= round);
+  t.knockoutChampion = null;
+  t.knockoutRunnerUp = null;
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ---------------------------------------------------------------------------
+   Tournaments
+--------------------------------------------------------------------------- */
+function createTournament(cfg) {
+  const db = loadDB();
+  const t = {
+    id: uid("trn"),
+    name: cfg.name,
+    logo: cfg.logo || "🏆",
+    type: cfg.type,                 // 'league' | 'cup' | 'knockout'
+    leagueId: cfg.leagueId || null, // if type === 'league' or 'cup'
+    customLeagueName: cfg.customLeagueName || null,
+    legMode: cfg.legMode || "single", // 'single' | 'double'
+    pointsSystem: cfg.pointsSystem || { win: 3, draw: 1, loss: 0, bonusFiveGoals: false, bonusCleanSheet: false },
+    playerIds: cfg.playerIds.slice(),
+    matches: [],
+    groups: null,             // set for type === 'cup'
+    qualifiersPerGroup: null, // set for type === 'cup'
+    standingsHistory: [], // snapshots for rank-change arrows
+    status: "ongoing",
+    createdAt: Date.now(),
+    completedAt: null,
+    awards: null,
+    seasonId: cfg.seasonId || null,
+    knockoutChampion: null,
+    knockoutRunnerUp: null,
+  };
+  if (t.type === "knockout") {
+    t.matches = generateKnockout(t.playerIds);
+  } else if (t.type === "cup") {
+    const { groups, qualifiersPerGroup } = generateCupGroups(t.playerIds);
+    t.groups = groups;
+    t.qualifiersPerGroup = qualifiersPerGroup;
+    t.matches = generateCupMatches(groups, t.legMode);
+  } else {
+    t.matches = generateRoundRobin(t.playerIds, t.legMode === "double");
+  }
+  db.tournaments.push(t);
+  const db2 = loadDB();
+  db2.players.forEach(p => {
+    if (t.playerIds.includes(p.id)) {
+      p.career.tournamentsPlayed += 1;
+    }
+  });
+  saveDB();
+  pushNotification(`تم إنشاء بطولة جديدة: ${t.name} 🏆`, "🏆");
+  return t;
+}
+
+function getTournament(id) {
+  return loadDB().tournaments.find(t => t.id === id);
+}
+
+function ongoingTournaments() {
+  return loadDB().tournaments.filter(t => t.status === "ongoing").sort((a, b) => b.createdAt - a.createdAt);
+}
+
+function completedTournaments() {
+  return loadDB().tournaments.filter(t => t.status === "completed").sort((a, b) => b.completedAt - a.completedAt);
+}
+
+function deleteTournament(id) {
+  const db = loadDB();
+  const t = db.tournaments.find(x => x.id === id);
+  db.tournaments = db.tournaments.filter(x => x.id !== id);
+  db.seasons.forEach(s => { s.tournamentIds = s.tournamentIds.filter(tid => tid !== id); });
+  saveDB();
+  recomputeCareerStatsForTournament(); // refresh all player stats now that this tournament is gone
+  if (t) pushNotification(`تم حذف بطولة: ${t.name} 🗑`, "🗑");
+}
+
+/* Record / update a match result and update career stats incrementally-safe
+   (recomputation-based to avoid double counting on edits). */
+function recordResult(tournamentId, matchId, homeGoals, awayGoals, penaltyWinnerId) {
+  const t = getTournament(tournamentId);
+  const m = t.matches.find(mm => mm.id === matchId);
+  if (!m) return;
+  m.homeGoals = homeGoals;
+  m.awayGoals = awayGoals;
+  m.played = true;
+  if (m.stage === "knockout") {
+    m.penaltyWinner = (homeGoals === awayGoals) ? (penaltyWinnerId || null) : null;
+  }
+  if (t.type === "cup") {
+    progressCupFromGroupsToKnockout(t); // no-op unless the group stage just completed
+  }
+  progressKnockout(t); // no-op unless a full knockout round was just decided
+  recomputeCareerStatsForTournament(t);
+  if (t.type !== "cup") snapshotStandings(t);
+  saveDB();
+}
+
+function clearResult(tournamentId, matchId) {
+  const t = getTournament(tournamentId);
+  const m = t.matches.find(mm => mm.id === matchId);
+  if (!m) return;
+  if (m.isBye) return; // byes cannot be edited
+  m.homeGoals = null; m.awayGoals = null; m.played = false; m.penaltyWinner = null;
+  if (m.stage === "knockout") {
+    pruneKnockoutAfterRound(t, m.round);
+  } else if (m.stage === "group" && t.matches.some(x => x.stage === "knockout")) {
+    // editing a group score after the bracket was already seeded invalidates
+    // it — wipe the knockout stage so it gets regenerated once groups settle
+    t.matches = t.matches.filter(x => x.stage !== "knockout");
+    t.knockoutChampion = null;
+    t.knockoutRunnerUp = null;
+  }
+  recomputeCareerStatsForTournament(t);
+  saveDB();
+}
+
+/* Recompute this tournament's contribution to each involved player's career
+   stats by fully rebuilding from match log (idempotent & edit-safe). */
+function recomputeCareerStatsForTournament(t) {
+  const db = loadDB();
+
+  // Simplify: fully rebuild each player's career totals from scratch across
+  // ALL tournaments they appear in, each time a result changes. This keeps
+  // numbers always consistent even after editing old scores. Achievements
+  // already unlocked are preserved so recompute never re-awards XP/coins.
+  db.players.forEach(p => {
+    const keepAchievements = (p.career && p.career.achievements) ? p.career.achievements.slice() : [];
+    p.career = blankCareer();
+    p.career.achievements = keepAchievements;
+  });
+
+  db.tournaments.forEach(trn => {
+    const perPlayer = {};
+    trn.playerIds.filter(id => id !== "__BYE__").forEach(id => (perPlayer[id] = { streak: 0, unbeaten: 0 }));
+
+    trn.matches
+      .filter(m => m.played && m.homeId !== "__BYE__" && m.awayId !== "__BYE__" && m.homeId && m.awayId)
+      .sort((a, b) => a.round - b.round)
+      .forEach(m => {
+        const home = getPlayer(m.homeId);
+        const away = getPlayer(m.awayId);
+        if (!home || !away) return;
+        [ { self: home, sg: m.homeGoals, og: m.awayGoals },
+          { self: away, sg: m.awayGoals, og: m.homeGoals } ].forEach(({ self, sg, og }) => {
+          const c = self.career;
+          c.matchesPlayed += 1;
+          c.goals += sg;
+          c.goalsConceded += og;
+          if (og === 0) c.cleanSheets += 1;
+          if (sg >= 5) c.fiveStars += 1;
+          else if (sg >= 3) c.hattricks += 1;
+          const margin = sg - og;
+          const st = perPlayer[self.id] || { streak: 0, unbeaten: 0 };
+          if (sg > og) {
+            c.wins += 1; st.streak += 1; st.unbeaten += 1;
+            c.bestWinStreak = Math.max(c.bestWinStreak, st.streak);
+            c.bestUnbeatenStreak = Math.max(c.bestUnbeatenStreak, st.unbeaten);
+            if (margin >= 4) c.bonusCount += 1; // dominant win bonus
+            if (!c.biggestWin || margin > c.biggestWin.margin) {
+              c.biggestWin = { score: `${sg}-${og}`, margin, opponent: (self === home ? away.name : home.name) };
+            }
+          } else if (sg === og) {
+            c.draws += 1; st.streak = 0; st.unbeaten += 1;
+            c.bestUnbeatenStreak = Math.max(c.bestUnbeatenStreak, st.unbeaten);
+          } else {
+            c.losses += 1; st.streak = 0; st.unbeaten = 0;
+          }
+          perPlayer[self.id] = st;
+        });
+      });
+  });
+
+  // tournament wins (based on final standings, only for completed tournaments)
+  db.tournaments.filter(trn => trn.status === "completed" && trn.awards && trn.awards.champion).forEach(trn => {
+    const champ = getPlayer(trn.awards.champion);
+    if (champ) champ.career.tournamentsWon += 1;
+  });
+  // tournamentsPlayed: count distinct tournaments a player belongs to
+  db.players.forEach(p => (p.career.tournamentsPlayed = 0));
+  db.tournaments.forEach(trn => {
+    trn.playerIds.filter(id => id !== "__BYE__").forEach(id => {
+      const p = getPlayer(id);
+      if (p) p.career.tournamentsPlayed += 1;
+    });
+  });
+
+  // achievements + xp for goals/wins recorded this pass (idempotent: only fires once per id)
+  db.players.forEach(p => checkAchievements(p));
+}
+
+/* ---------------------------------------------------------------------------
+   Standings (with rank-change tracking)
+--------------------------------------------------------------------------- */
+function computeStandings(t) {
+  const rows = computeStandingsFromMatches(t.playerIds, t.matches, t.pointsSystem);
+
+  const prev = (t.standingsHistory && t.standingsHistory.length)
+    ? t.standingsHistory[t.standingsHistory.length - 1] : null;
+  rows.forEach(r => {
+    const prevRank = prev ? prev[r.id] : null;
+    r.trend = prevRank == null ? "new" : prevRank === r.rank ? "same" : prevRank > r.rank ? "up" : "down";
+    r.trendDelta = prevRank == null ? 0 : prevRank - r.rank;
+  });
+  return rows;
+}
+
+function snapshotStandings(t) {
+  const rows = computeStandings(t);
+  const snap = {};
+  rows.forEach(r => (snap[r.id] = r.rank));
+  t.standingsHistory.push(snap);
+  if (t.standingsHistory.length > 200) t.standingsHistory.shift();
+}
+
+/* Finalize a tournament: compute awards, mark completed */
+function completeTournament(tournamentId) {
+  const t = getTournament(tournamentId);
+  if (!t) return null;
+  if (t.type === "knockout" && !t.knockoutChampion) return null; // bracket not finished yet
+  if (t.type === "cup" && !t.knockoutChampion) return null; // group stage or bracket not finished yet
+  const standings = computeStandings(t);
+  if (!standings.length) return null;
+
+  const byGoals = standings.slice().sort((a, b) => b.gf - a.gf)[0];
+  const byConceded = standings.slice().sort((a, b) => a.ga - b.ga)[0];
+  const byCleanSheetPlayers = t.playerIds.filter(id => id !== "__BYE__").map(id => {
+    const p = getPlayer(id);
+    const cs = t.matches.filter(m => m.played &&
+      ((m.homeId === id && m.awayGoals === 0) || (m.awayId === id && m.homeGoals === 0))).length;
+    return { id, cs };
+  }).sort((a, b) => b.cs - a.cs)[0];
+
+  const usesBracket = t.type === "knockout" || t.type === "cup";
+  const champion = usesBracket ? t.knockoutChampion : (standings[0] ? standings[0].id : null);
+  const runnerUp = usesBracket ? t.knockoutRunnerUp : (standings[1] ? standings[1].id : null);
+  const third = usesBracket ? null : (standings[2] ? standings[2].id : null);
+
+  t.awards = {
+    champion, runnerUp, third,
+    topScorer: byGoals ? byGoals.id : null,
+    bestDefense: byConceded ? byConceded.id : null,
+    bestGK: byCleanSheetPlayers ? byCleanSheetPlayers.id : null,
+    fiveStarKing: (() => {
+      const db = loadDB();
+      const list = t.playerIds.filter(id => id !== "__BYE__").map(id => {
+        const p = getPlayer(id);
+        return { id, n: p ? p.career.fiveStars : 0 };
+      }).sort((a, b) => b.n - a.n);
+      return list.length && list[0].n > 0 ? list[0].id : null;
+    })(),
+  };
+  t.status = "completed";
+  t.completedAt = Date.now();
+
+  // rewards — champion/runner-up get top placement XP regardless of format,
+  // everyone else is rewarded by league position (or participation, for knockout/cup)
+  const db = loadDB();
+  standings.forEach((row) => {
+    const p = getPlayer(row.id);
+    if (!p) return;
+    let idx = 3; // default "participation" tier
+    if (row.id === champion) idx = 0;
+    else if (row.id === runnerUp) idx = 1;
+    else if (row.id === third) idx = 2;
+    else if (!usesBracket) idx = standings.findIndex(r => r.id === row.id);
+    const placementXP = idx === 0 ? 300 : idx === 1 ? 180 : idx === 2 ? 120 : 60;
+    addXP(p, placementXP);
+  });
+
+  recomputeCareerStatsForTournament(t); // re-run so tournamentsWon + achievements catch up
+  saveDB();
+  pushNotification(`انتهت بطولة ${t.name}! 🏆`, "🎉");
+  return t;
+}
+
+/* ---------------------------------------------------------------------------
+   Seasons
+--------------------------------------------------------------------------- */
+function createSeason(name, tournamentConfigs) {
+  // tournamentConfigs: array of {name, type, leagueId, legMode, pointsSystem, playerIds, rules, logo}
+  const db = loadDB();
+  const season = { id: uid("szn"), name, tournamentIds: [], status: "ongoing", createdAt: Date.now(), completedAt: null };
+  db.seasons.push(season);
+  saveDB();
+  tournamentConfigs.forEach(cfg => {
+    const t = createTournament({ ...cfg, seasonId: season.id });
+    season.tournamentIds.push(t.id);
+  });
+  saveDB();
+  return season;
+}
+
+function getSeason(id) { return loadDB().seasons.find(s => s.id === id); }
+function allSeasons() { return loadDB().seasons.slice().sort((a, b) => b.createdAt - a.createdAt); }
+
+function seasonTournaments(season) {
+  return season.tournamentIds.map(id => getTournament(id)).filter(Boolean);
+}
+
+/* Aggregate season standings: sum of points across all tournaments in season
+   using each tournament's own points system, plus champion bonus. */
+function computeSeasonStandings(season) {
+  const trns = seasonTournaments(season);
+  const table = {};
+  trns.forEach(t => {
+    const rows = computeStandings(t);
+    rows.forEach(r => {
+      if (!table[r.id]) table[r.id] = { id: r.id, pts: 0, goals: 0, cleanSheets: 0, titles: 0, played: 0 };
+      table[r.id].pts += r.pts;
+      table[r.id].goals += r.gf;
+      table[r.id].played += r.played;
+    });
+    if (t.status === "completed" && t.awards && t.awards.champion) {
+      if (table[t.awards.champion]) {
+        table[t.awards.champion].pts += 10; // champion bonus
+        table[t.awards.champion].titles += 1;
+      }
+    }
+  });
+  return Object.values(table).sort((a, b) => b.pts - a.pts || b.goals - a.goals);
+}
+
+function completeSeason(seasonId) {
+  const season = getSeason(seasonId);
+  if (!season) return null;
+  const standings = computeSeasonStandings(season);
+  season.status = "completed";
+  season.completedAt = Date.now();
+  season.finalStandings = standings;
+  season.champion = standings.length ? standings[0].id : null;
+  saveDB();
+  pushNotification(`انتهى الموسم: ${season.name} 👑`, "👑");
+  return season;
+}
+
+/* ---------------------------------------------------------------------------
+   Statistics (global / per-tournament) — 40+ computed metrics
+--------------------------------------------------------------------------- */
+function computeGlobalStatistics() {
+  const db = loadDB();
+  const players = db.players;
+  const stat = (label, icon, value, sub) => ({ label, icon, value, sub: sub || "" });
+  const withMin = (arr, minMatches) => arr.filter(p => p.career.matchesPlayed >= minMatches);
+  const top = (arr, fn, dir = "max") => {
+    if (!arr.length) return null;
+    return arr.slice().sort((a, b) => dir === "max" ? fn(b) - fn(a) : fn(a) - fn(b))[0];
+  };
+  const named = p => p ? `${p.avatar} ${p.name}` : "—";
+
+  const totalMatches = db.tournaments.reduce((s, t) => s + t.matches.filter(m => m.played).length, 0);
+  const totalGoals = players.reduce((s, p) => s + p.career.goals, 0);
+  const totalCleanSheets = players.reduce((s, p) => s + p.career.cleanSheets, 0);
+
+  const list = [];
+  const topScorer = top(players, p => p.career.goals);
+  list.push(stat("أكثر لاعب تسجيلاً", "⚽", named(topScorer), topScorer ? `${topScorer.career.goals} هدف` : ""));
+
+  const mostConceded = top(players, p => p.career.goalsConceded);
+  list.push(stat("أكثر لاعب استقبالاً للأهداف", "🥅", named(mostConceded), mostConceded ? `${mostConceded.career.goalsConceded} هدف` : ""));
+
+  const mostCS = top(players, p => p.career.cleanSheets);
+  list.push(stat("أكثر شباك نظيفة", "🧤", named(mostCS), mostCS ? `${mostCS.career.cleanSheets} شباك` : ""));
+
+  const mostWins = top(players, p => p.career.wins);
+  list.push(stat("أكثر لاعب فوزاً", "✅", named(mostWins), mostWins ? `${mostWins.career.wins} فوز` : ""));
+
+  const mostDraws = top(players, p => p.career.draws);
+  list.push(stat("أكثر لاعب تعادلاً", "🤝", named(mostDraws), mostDraws ? `${mostDraws.career.draws} تعادل` : ""));
+
+  const mostLosses = top(players, p => p.career.losses);
+  list.push(stat("أكثر لاعب خسارةً", "❌", named(mostLosses), mostLosses ? `${mostLosses.career.losses} خسارة` : ""));
+
+  const biggestWinP = top(players.filter(p => p.career.biggestWin), p => p.career.biggestWin.margin);
+  list.push(stat("أكبر نتيجة فوز", "💥", biggestWinP ? `${named(biggestWinP)} (${biggestWinP.career.biggestWin.score})` : "—", biggestWinP ? `ضد ${biggestWinP.career.biggestWin.opponent}` : ""));
+
+  const bestAttack = top(withMin(players, 3), p => p.career.goals / p.career.matchesPlayed);
+  list.push(stat("أفضل هجوم (معدل)", "🎯", named(bestAttack), bestAttack ? `${(bestAttack.career.goals / bestAttack.career.matchesPlayed).toFixed(2)} هدف/مباراة` : ""));
+
+  const bestDefense = top(withMin(players, 3), p => p.career.goalsConceded / p.career.matchesPlayed, "min");
+  list.push(stat("أفضل دفاع (معدل)", "🛡", named(bestDefense), bestDefense ? `${(bestDefense.career.goalsConceded / bestDefense.career.matchesPlayed).toFixed(2)} هدف/مباراة` : ""));
+
+  const mostHatt = top(players, p => p.career.hattricks);
+  list.push(stat("أكثر هاتريكات", "🎩", named(mostHatt), mostHatt ? `${mostHatt.career.hattricks}` : ""));
+
+  const mostFive = top(players, p => p.career.fiveStars);
+  list.push(stat("ملك الخماسيات", "🌟", named(mostFive), mostFive ? `${mostFive.career.fiveStars}` : ""));
+
+  const bestStreak = top(players, p => p.career.bestWinStreak);
+  list.push(stat("أطول سلسلة انتصارات", "🔥", named(bestStreak), bestStreak ? `${bestStreak.career.bestWinStreak} مباراة` : ""));
+
+  const bestUnbeaten = top(players, p => p.career.bestUnbeatenStreak);
+  list.push(stat("أطول سلسلة بلا هزيمة", "🛡", named(bestUnbeaten), bestUnbeaten ? `${bestUnbeaten.career.bestUnbeatenStreak} مباراة` : ""));
+
+  const mostTitles = top(players, p => p.career.tournamentsWon);
+  list.push(stat("أكثر لاعب حصد بطولات", "👑", named(mostTitles), mostTitles ? `${mostTitles.career.tournamentsWon} لقب` : ""));
+
+  const highestLevel = top(players, p => p.level);
+  list.push(stat("أعلى مستوى", "⭐", named(highestLevel), highestLevel ? `مستوى ${highestLevel.level}` : ""));
+
+  const mostAchievements = top(players, p => p.career.achievements.length);
+  list.push(stat("أكثر الإنجازات", "🏅", named(mostAchievements), mostAchievements ? `${mostAchievements.career.achievements.length} إنجاز` : ""));
+
+  list.push(stat("إجمالي المباريات الملعوبة", "📋", totalMatches));
+  list.push(stat("إجمالي الأهداف المسجلة", "⚽", totalGoals));
+  list.push(stat("إجمالي الشباك النظيفة", "🧤", totalCleanSheets));
+  list.push(stat("متوسط الأهداف لكل مباراة", "📊", totalMatches ? (totalGoals / totalMatches).toFixed(2) : "0"));
+  list.push(stat("عدد اللاعبين المسجلين", "👥", players.length));
+  list.push(stat("عدد البطولات المكتملة", "🏆", db.tournaments.filter(t => t.status === "completed").length));
+  list.push(stat("عدد البطولات الجارية", "▶", db.tournaments.filter(t => t.status === "ongoing").length));
+  list.push(stat("عدد المواسم", "📅", db.seasons.length));
+
+  players.forEach(() => {}); // noop guard
+  const winPctP = top(withMin(players, 3), p => p.career.wins / p.career.matchesPlayed);
+  list.push(stat("أعلى نسبة فوز", "📈", named(winPctP), winPctP ? `${Math.round(100 * winPctP.career.wins / winPctP.career.matchesPlayed)}%` : ""));
+
+  const scoringRateP = top(withMin(players, 3), p => p.career.goals / p.career.matchesPlayed);
+  list.push(stat("أعلى نسبة تسجيل", "🎯", named(scoringRateP), scoringRateP ? `${(scoringRateP.career.goals / scoringRateP.career.matchesPlayed).toFixed(2)} هدف/مباراة` : ""));
+
+  const csRateP = top(withMin(players, 3), p => p.career.cleanSheets / p.career.matchesPlayed);
+  list.push(stat("أعلى نسبة شباك نظيفة", "🧤", named(csRateP), csRateP ? `${Math.round(100 * csRateP.career.cleanSheets / csRateP.career.matchesPlayed)}%` : ""));
+
+  // most exciting match: combines how advanced the round is (closer to the
+  // final = more exciting) with the total goals scored in that match
+  let bestMatch = null, bestScore = -1, bestMatchPlayers = null, bestMatchTotalGoals = 0, bestMatchStageLabel = "";
+  db.tournaments.forEach(t => {
+    const koMatches = t.matches.filter(m => m.stage === "knockout");
+    const maxKoRound = koMatches.length ? koMatches.reduce((mx, x) => Math.max(mx, x.round), 1) : 0;
+    t.matches.filter(m => m.played && m.homeId && m.awayId && m.homeId !== "__BYE__" && m.awayId !== "__BYE__").forEach(m => {
+      const totalGoals = (m.homeGoals || 0) + (m.awayGoals || 0);
+      let roundWeight = 0;
+      let stageLabel = m.stage === "group" ? "دور المجموعات" : (t.type === "league" ? "الدوري" : "");
+      if (m.stage === "knockout" && maxKoRound > 0) {
+        roundWeight = m.round / maxKoRound;
+        const roundsFromFinal = maxKoRound - m.round;
+        stageLabel = roundsFromFinal === 0 ? "النهائي"
+          : roundsFromFinal === 1 ? "نصف النهائي"
+          : roundsFromFinal === 2 ? "ربع النهائي"
+          : `دور الـ${Math.pow(2, roundsFromFinal + 1)}`;
+      }
+      const score = roundWeight * 1000 + totalGoals;
+      if (score > bestScore) {
+        bestScore = score; bestMatch = m; bestMatchTotalGoals = totalGoals;
+        bestMatchPlayers = [getPlayer(m.homeId), getPlayer(m.awayId)];
+        bestMatchStageLabel = stageLabel;
+      }
+    });
+  });
+  list.push(stat("أكثر مباراة إثارة", "🎢",
+    bestMatch ? `${named(bestMatchPlayers[0])} ${bestMatch.homeGoals}-${bestMatch.awayGoals} ${named(bestMatchPlayers[1])}` : "—",
+    bestMatch ? `${bestMatchStageLabel}${bestMatchStageLabel ? " · " : ""}${bestMatchTotalGoals} أهداف مجمعة` : ""));
+
+  // most faced opponent pair
+  const pairCount = {};
+  db.tournaments.forEach(t => t.matches.filter(m => m.played && m.homeId !== "__BYE__" && m.awayId !== "__BYE__").forEach(m => {
+    const key = [m.homeId, m.awayId].sort().join("|");
+    pairCount[key] = (pairCount[key] || 0) + 1;
+  }));
+  let bestPairKey = null, bestPairN = 0;
+  Object.entries(pairCount).forEach(([k, n]) => { if (n > bestPairN) { bestPairN = n; bestPairKey = k; } });
+  if (bestPairKey) {
+    const [id1, id2] = bestPairKey.split("|");
+    list.push(stat("أكثر مواجهة متكررة", "⚔", `${named(getPlayer(id1))} × ${named(getPlayer(id2))}`, `${bestPairN} مباريات`));
+  } else {
+    list.push(stat("أكثر مواجهة متكررة", "⚔", "—"));
+  }
+
+  // head-to-head domination: player with best win record vs a single frequent rival
+  let domName = "—", domSub = "";
+  const h2h = {}; // "a>b" wins of a over b
+  db.tournaments.forEach(t => t.matches.filter(m => m.played && m.homeId !== "__BYE__" && m.awayId !== "__BYE__").forEach(m => {
+    if (m.homeGoals > m.awayGoals) h2h[`${m.homeId}>${m.awayId}`] = (h2h[`${m.homeId}>${m.awayId}`] || 0) + 1;
+    else if (m.awayGoals > m.homeGoals) h2h[`${m.awayId}>${m.homeId}`] = (h2h[`${m.awayId}>${m.homeId}`] || 0) + 1;
+  }));
+  let bestDomKey = null, bestDomN = 0;
+  Object.entries(h2h).forEach(([k, n]) => { if (n > bestDomN) { bestDomN = n; bestDomKey = k; } });
+  if (bestDomKey) {
+    const [winner, loser] = bestDomKey.split(">");
+    domName = `فوز ${named(getPlayer(winner))} على ${named(getPlayer(loser))}`;
+    domSub = `${bestDomN} انتصارات`;
+  }
+  list.push(stat("أكثر لاعب فاز عليه لاعب آخر", "🎯", domName, domSub));
+
+  const mostBonus = top(players, p => p.career.bonusCount);
+  list.push(stat("أكثر لاعب حصل على Bonus", "🎁", named(mostBonus), mostBonus ? `${mostBonus.career.bonusCount}` : ""));
+
+  const mostMatches = top(players, p => p.career.matchesPlayed);
+  list.push(stat("أكثر لاعب لعب مباريات", "📋", named(mostMatches), mostMatches ? `${mostMatches.career.matchesPlayed} مباراة` : ""));
+
+  const totalXP = players.reduce((s, p) => s + p.xp + xpForLevel(p.level) * (p.level - 1), 0);
+  list.push(stat("إجمالي نقاط الخبرة بالموقع", "🧠", totalXP));
+
+  const avgGoalsPerPlayer = players.length ? (totalGoals / players.length).toFixed(1) : "0";
+  list.push(stat("متوسط الأهداف لكل لاعب", "⚽", avgGoalsPerPlayer));
+
+  const drawRate = totalMatches ? Math.round(100 * db.tournaments.reduce((s, t) => s + t.matches.filter(m => m.played && m.homeGoals === m.awayGoals).length, 0) / totalMatches) : 0;
+  list.push(stat("نسبة التعادلات", "🤝", `${drawRate}%`));
+
+  const cleanSheetRate = totalMatches ? Math.round(100 * totalCleanSheets / (totalMatches * 2)) : 0;
+  list.push(stat("نسبة الشباك النظيفة", "🧤", `${cleanSheetRate}%`));
+
+  const goalfest = db.tournaments.reduce((s, t) => s + t.matches.filter(m => m.played && ((m.homeGoals || 0) + (m.awayGoals || 0)) >= 5).length, 0);
+  list.push(stat("مباريات بـ 5 أهداف فأكثر", "🎆", goalfest));
+
+  const cleanTournaments = db.tournaments.filter(t => t.status === "completed").length;
+  list.push(stat("بطولات مكتملة بالكامل", "🏁", cleanTournaments));
+
+  const mostLevels = players.reduce((s, p) => s + p.level, 0);
+  list.push(stat("مجموع مستويات كل اللاعبين", "⭐", mostLevels));
+
+  return list;
+}
+
+function computeTournamentStatistics(t) {
+  const standings = computeStandings(t);
+  const stat = (label, icon, value, sub) => ({ label, icon, value, sub: sub || "" });
+  const list = [];
+  const played = t.matches.filter(m => m.played);
+  const totalGoals = played.reduce((s, m) => s + (m.homeGoals || 0) + (m.awayGoals || 0), 0);
+  list.push(stat("مباريات ملعوبة", "📋", `${played.length}/${t.matches.length}`));
+  list.push(stat("إجمالي الأهداف", "⚽", totalGoals));
+  list.push(stat("متوسط الأهداف/مباراة", "📊", played.length ? (totalGoals / played.length).toFixed(2) : "0"));
+  if (standings.length) {
+    const leader = standings[0];
+    list.push(stat("المتصدر الحالي", "👑", `${getPlayer(leader.id)?.name || "—"}`, `${leader.pts} نقطة`));
+    const bestAtk = standings.slice().sort((a, b) => b.gf - a.gf)[0];
+    list.push(stat("أفضل هجوم", "🎯", getPlayer(bestAtk.id)?.name || "—", `${bestAtk.gf} هدف`));
+    const bestDef = standings.slice().sort((a, b) => a.ga - b.ga)[0];
+    list.push(stat("أفضل دفاع", "🛡", getPlayer(bestDef.id)?.name || "—", `${bestDef.ga} هدف مستقبل`));
+  }
+  const goalfest = played.filter(m => (m.homeGoals + m.awayGoals) >= 5).length;
+  list.push(stat("مباريات حماسية (5+ أهداف)", "🎆", goalfest));
+  return list;
+}
+
+/* ---------------------------------------------------------------------------
+   Hall of Fame — persistent all-time rankings & season/tournament champions
+--------------------------------------------------------------------------- */
+function hallOfFameData() {
+  const db = loadDB();
+  const champions = db.tournaments
+    .filter(t => t.status === "completed" && t.awards && t.awards.champion)
+    .map(t => ({ tournament: t.name, logo: t.logo, leagueId: t.leagueId, playerId: t.awards.champion, date: t.completedAt }))
+    .sort((a, b) => b.date - a.date);
+
+  const seasonChampions = db.seasons
+    .filter(s => s.status === "completed" && s.champion)
+    .map(s => ({ season: s.name, playerId: s.champion, date: s.completedAt }))
+    .sort((a, b) => b.date - a.date);
+
+  const rankings = db.players.slice().sort((a, b) =>
+    (b.career.tournamentsWon - a.career.tournamentsWon) ||
+    (b.career.goals - a.career.goals) ||
+    (b.level - a.level)
+  );
+
+  return { champions, seasonChampions, rankings };
+}
+
+/* ---------------------------------------------------------------------------
+   Backup / restore
+--------------------------------------------------------------------------- */
+function exportBackupJSON() {
+  return JSON.stringify(loadDB(), null, 2);
+}
+function importBackupJSON(json) {
+  const parsed = JSON.parse(json);
+  _db = parsed;
+  saveDB();
+}
+function resetDatabase() {
+  _db = emptyDB();
+  saveDB();
+}
+
+/* expose */
+window.EFTM_DB = {
+  LEAGUES, CUPS, DEFAULT_THEME, ACHIEVEMENTS, xpForLevel,
+  loadDB, saveDB, uid, pushNotification,
+  initRemoteSync,
+  createPlayer, getPlayer, allPlayers, deletePlayer, tournamentsInvolvingPlayer, addXP, checkAchievements,
+  createTournament, getTournament, ongoingTournaments, completedTournaments, deleteTournament,
+  recordResult, clearResult, computeStandings, computeGroupStandings, isGroupStageComplete, completeTournament,
+  createSeason, getSeason, allSeasons, seasonTournaments, computeSeasonStandings, completeSeason,
+  computeGlobalStatistics, computeTournamentStatistics,
+  hallOfFameData, exportBackupJSON, importBackupJSON, resetDatabase,
+  shuffle,
+};
+
+
+/* ============================================================================
+   2) SHARED UI ENGINE (script.js) — sound, effects, celebration, exports
+   ============================================================================ */
+/* ============================================================================
+   eFootball Tournament Master — script.js
+   Shared UI engine used by every page: theming, sound, visual effects,
+   toasts/notifications, navigation helpers and export utilities.
+   ============================================================================ */
+
+(function () {
+  const DB = window.EFTM_DB;
+
+  /* ---------------------------------------------------------------------
+     Root path resolver — works whether page is at / or /pages/
+  --------------------------------------------------------------------- */
+  const ROOT = location.pathname.includes("/pages/") ? "../" : "./";
+  window.EFTM_ROOT = ROOT;
+
+  /* ---------------------------------------------------------------------
+     Theme (dark / light) + league color theming
+  --------------------------------------------------------------------- */
+  function applySavedTheme() {
+    const db = DB.loadDB();
+    document.documentElement.setAttribute("data-mode", db.settings.theme || "dark");
+  }
+
+  function toggleTheme() {
+    const db = DB.loadDB();
+    db.settings.theme = db.settings.theme === "light" ? "dark" : "light";
+    DB.saveDB();
+    applySavedTheme();
+    return db.settings.theme;
+  }
+
+  function applyLeagueTheme(leagueId) {
+    const found = DB.LEAGUES.find(l => l.id === leagueId) || DB.CUPS.find(c => c.id === leagueId);
+    const colors = found ? found.colors : DB.DEFAULT_THEME;
+    const root = document.documentElement.style;
+    root.setProperty("--league-primary", colors.primary);
+    root.setProperty("--league-secondary", colors.secondary);
+    root.setProperty("--league-accent", colors.accent);
+  }
+
+  /* ---------------------------------------------------------------------
+     Sound engine — synthesized via WebAudio (no external files needed)
+  --------------------------------------------------------------------- */
+  let actx = null;
+  function ac() {
+    if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+    return actx;
+  }
+  function soundEnabled() {
+    return DB.loadDB().settings.sound !== false;
+  }
+  function tone(freq, start, dur, type, gain) {
+    if (!soundEnabled()) return;
+    try {
+      const ctx = ac();
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = type || "sine";
+      osc.frequency.value = freq;
+      g.gain.value = 0;
+      osc.connect(g); g.connect(ctx.destination);
+      const t0 = ctx.currentTime + start;
+      g.gain.setValueAtTime(0, t0);
+      g.gain.linearRampToValueAtTime(gain || 0.15, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+      osc.start(t0); osc.stop(t0 + dur + 0.05);
+    } catch (e) { /* audio blocked until user gesture — silently ignore */ }
+  }
+  const Sound = {
+    click: () => tone(520, 0, 0.08, "triangle", 0.08),
+    whistle: () => { tone(1400, 0, 0.18, "square", 0.06); tone(1800, 0.18, 0.12, "square", 0.05); },
+    goal: () => { [660, 880, 1100, 1320].forEach((f, i) => tone(f, i * 0.08, 0.25, "triangle", 0.12)); },
+    fanfare: () => {
+      [523, 659, 784, 1047].forEach((f, i) => tone(f, i * 0.15, 0.4, "sawtooth", 0.09));
+      setTimeout(() => [784, 1047, 1319].forEach((f, i) => tone(f, i * 0.1, 0.5, "triangle", 0.1)), 650);
+    },
+    levelUp: () => [440, 554, 660, 880].forEach((f, i) => tone(f, i * 0.06, 0.2, "sine", 0.1)),
+    error: () => tone(160, 0, 0.25, "sawtooth", 0.08),
+  };
+
+  /* ---------------------------------------------------------------------
+     Toasts / notifications
+  --------------------------------------------------------------------- */
+  function ensureToastHost() {
+    let host = document.getElementById("eftm-toast-host");
+    if (!host) {
+      host = document.createElement("div");
+      host.id = "eftm-toast-host";
+      host.className = "eftm-toast-host";
+      document.body.appendChild(host);
+    }
+    return host;
+  }
+  function toast(text, icon) {
+    const host = ensureToastHost();
+    const el = document.createElement("div");
+    el.className = "eftm-toast";
+    el.innerHTML = `<span class="eftm-toast-icon">${icon || "🔔"}</span><span>${escapeHtml(text)}</span>`;
+    host.appendChild(el);
+    requestAnimationFrame(() => el.classList.add("show"));
+    Sound.click();
+    setTimeout(() => {
+      el.classList.remove("show");
+      setTimeout(() => el.remove(), 350);
+    }, 3600);
+  }
+
+  /* ---------------------------------------------------------------------
+     Visual effects: confetti + fireworks canvas overlay + rotating trophy
+  --------------------------------------------------------------------- */
+  function effectsEnabled() { return DB.loadDB().settings.effects !== false; }
+
+  function launchConfetti(durationMs) {
+    if (!effectsEnabled()) return;
+    const canvas = getOrCreateFXCanvas();
+    const ctx = canvas.getContext("2d");
+    const colors = ["#16E37A", "#F4B942", "#4FD6FF", "#FF3B4E", "#FFFFFF"];
+    const pieces = Array.from({ length: 140 }, () => ({
+      x: Math.random() * canvas.width, y: -20 - Math.random() * canvas.height,
+      w: 6 + Math.random() * 6, h: 8 + Math.random() * 10,
+      speed: 2 + Math.random() * 3, drift: (Math.random() - 0.5) * 2,
+      rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 10,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    }));
+    const end = Date.now() + (durationMs || 3500);
+    (function frame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        p.y += p.speed; p.x += p.drift; p.rot += p.rotSpeed;
+        ctx.save();
+        ctx.translate(p.x, p.y); ctx.rotate((p.rot * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      });
+      if (Date.now() < end) requestAnimationFrame(frame);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    })();
+  }
+
+  function launchFireworks(durationMs) {
+    if (!effectsEnabled()) return;
+    const canvas = getOrCreateFXCanvas();
+    const ctx = canvas.getContext("2d");
+    const colors = ["#16E37A", "#F4B942", "#4FD6FF", "#FF3B4E", "#FFFFFF", "#B400E0"];
+    let particles = [];
+    function burst(x, y) {
+      const n = 46;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      for (let i = 0; i < n; i++) {
+        const angle = (Math.PI * 2 * i) / n;
+        const speed = 2 + Math.random() * 3.5;
+        particles.push({
+          x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+          life: 60 + Math.random() * 20, color, size: 2 + Math.random() * 2,
+        });
+      }
+    }
+    const end = Date.now() + (durationMs || 4000);
+    let lastBurst = 0;
+    (function frame(ts) {
+      if (!lastBurst || ts - lastBurst > 550) {
+        lastBurst = ts;
+        burst(canvas.width * (0.2 + Math.random() * 0.6), canvas.height * (0.15 + Math.random() * 0.35));
+      }
+      ctx.fillStyle = "rgba(6,9,15,0.18)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.03; p.life -= 1;
+        ctx.globalAlpha = Math.max(p.life / 80, 0);
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      particles = particles.filter(p => p.life > 0);
+      if (Date.now() < end) requestAnimationFrame(frame);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    })(0);
+  }
+
+  function getOrCreateFXCanvas() {
+    let c = document.getElementById("eftm-fx-canvas");
+    if (!c) {
+      c = document.createElement("canvas");
+      c.id = "eftm-fx-canvas";
+      c.className = "eftm-fx-canvas";
+      document.body.appendChild(c);
+    }
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    return c;
+  }
+  window.addEventListener("resize", () => {
+    const c = document.getElementById("eftm-fx-canvas");
+    if (c) { c.width = window.innerWidth; c.height = window.innerHeight; }
+  });
+
+  /* ---------------------------------------------------------------------
+     Celebration ceremony modal — trophy, fireworks, confetti, fanfare
+  --------------------------------------------------------------------- */
+  function showCelebration(tournament) {
+    const champ = DB.getPlayer(tournament.awards.champion);
+    const runner = DB.getPlayer(tournament.awards.runnerUp);
+    const third = DB.getPlayer(tournament.awards.third);
+    const topScorer = DB.getPlayer(tournament.awards.topScorer);
+    const bestDef = DB.getPlayer(tournament.awards.bestDefense);
+    const bestGK = DB.getPlayer(tournament.awards.bestGK);
+    const fiveStar = tournament.awards.fiveStarKing ? DB.getPlayer(tournament.awards.fiveStarKing) : null;
+
+    const overlay = document.createElement("div");
+    overlay.className = "eftm-celebration";
+    overlay.innerHTML = `
+      <div class="cel-stars"></div>
+      <div class="cel-content">
+        <div class="cel-trophy">🏆</div>
+        <div class="cel-title">البطل</div>
+        <div class="cel-champion">${champ ? champ.avatar : "👤"} ${escapeHtml(champ ? champ.name : "—")}</div>
+        <div class="cel-podium">
+          <div class="cel-pod pod-2">🥈<span>${escapeHtml(runner ? runner.name : "—")}</span></div>
+          <div class="cel-pod pod-1">🥇<span>${escapeHtml(champ ? champ.name : "—")}</span></div>
+          <div class="cel-pod pod-3">🥉<span>${escapeHtml(third ? third.name : "—")}</span></div>
+        </div>
+        <div class="cel-awards">
+          <div class="cel-award">⚽<span>هداف البطولة</span><b>${escapeHtml(topScorer ? topScorer.name : "—")}</b></div>
+          <div class="cel-award">🛡<span>أفضل دفاع</span><b>${escapeHtml(bestDef ? bestDef.name : "—")}</b></div>
+          <div class="cel-award">🧤<span>أفضل حارس</span><b>${escapeHtml(bestGK ? bestGK.name : "—")}</b></div>
+          ${fiveStar ? `<div class="cel-award">🌟<span>ملك الخماسيات</span><b>${escapeHtml(fiveStar.name)}</b></div>` : ""}
+        </div>
+        <button class="btn btn-primary cel-close">إغلاق الاحتفال</button>
+      </div>`;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add("show"));
+    Sound.fanfare();
+    launchFireworks(4500);
+    setTimeout(() => launchConfetti(3000), 300);
+    overlay.querySelector(".cel-close").addEventListener("click", () => {
+      overlay.classList.remove("show");
+      setTimeout(() => overlay.remove(), 400);
+    });
+  }
+
+  /* ---------------------------------------------------------------------
+     Animated draw (قرعة) — shuffles player names before settling
+  --------------------------------------------------------------------- */
+  function runDrawAnimation(names, onDone, opts) {
+    opts = opts || {};
+    const overlay = document.createElement("div");
+    overlay.className = "eftm-draw";
+    overlay.innerHTML = `
+      <div class="draw-card">
+        <div class="draw-label">${opts.label || "جاري القرعة..."}</div>
+        <div class="draw-name">—</div>
+      </div>`;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add("show"));
+    const nameEl = overlay.querySelector(".draw-name");
+    let i = 0;
+    const total = 24;
+    const iv = setInterval(() => {
+      nameEl.textContent = names[Math.floor(Math.random() * names.length)];
+      Sound.click();
+      i++;
+      if (i >= total) {
+        clearInterval(iv);
+        const finalName = names[Math.floor(Math.random() * names.length)];
+        nameEl.textContent = finalName;
+        Sound.whistle();
+        setTimeout(() => {
+          overlay.classList.remove("show");
+          setTimeout(() => { overlay.remove(); if (onDone) onDone(finalName); }, 350);
+        }, 900);
+      }
+    }, 90);
+  }
+
+  /* ---------------------------------------------------------------------
+     Generic choice overlay (e.g. picking a penalty-shootout winner)
+  --------------------------------------------------------------------- */
+  function confirmChoice(title, options, onPick) {
+    const overlay = document.createElement("div");
+    overlay.className = "eftm-draw";
+    overlay.innerHTML = `
+      <div class="draw-card">
+        <div class="draw-label">${title}</div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;">
+          ${options.map((o, i) => `<button class="btn btn-primary" data-i="${i}">${o.label}</button>`).join("")}
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add("show"));
+    overlay.querySelectorAll("button").forEach(b => b.onclick = () => {
+      const opt = options[+b.dataset.i];
+      UI_Sound_click_safe();
+      overlay.classList.remove("show");
+      setTimeout(() => overlay.remove(), 300);
+      onPick(opt.value);
+    });
+  }
+  function UI_Sound_click_safe(){ try { Sound.click(); } catch(e){} }
+
+  /* ---------------------------------------------------------------------
+     Lazy CDN loader (for PDF / Excel / image export libraries)
+  --------------------------------------------------------------------- */
+  const _loaded = {};
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      if (_loaded[src]) return resolve();
+      const s = document.createElement("script");
+      s.src = src;
+      s.onload = () => { _loaded[src] = true; resolve(); };
+      s.onerror = () => reject(new Error("تعذر تحميل مكتبة التصدير — تحقق من الاتصال بالإنترنت"));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function exportStandingsPDF(title, rows, columns) {
+    try {
+      await loadScript("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js");
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text(title, 14, 18);
+      doc.setFontSize(10);
+      let y = 30;
+      doc.text(columns.join(" | "), 14, y);
+      y += 6;
+      rows.forEach(r => {
+        doc.text(r.join(" | "), 14, y);
+        y += 6;
+        if (y > 280) { doc.addPage(); y = 20; }
+      });
+      doc.save(`${title}.pdf`);
+      toast("تم تصدير PDF بنجاح", "📄");
+    } catch (e) {
+      toast("فشل تصدير PDF — تحقق من الاتصال بالإنترنت", "⚠️");
+    }
+  }
+
+  async function exportStandingsExcel(title, rows, columns) {
+    try {
+      await loadScript("https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js");
+      const ws = XLSX.utils.aoa_to_sheet([columns, ...rows]);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Standings");
+      XLSX.writeFile(wb, `${title}.xlsx`);
+      toast("تم تصدير Excel بنجاح", "📊");
+    } catch (e) {
+      toast("فشل تصدير Excel — تحقق من الاتصال بالإنترنت", "⚠️");
+    }
+  }
+
+  async function exportElementAsImage(elementId, filename) {
+    try {
+      await loadScript("https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js");
+      const el = document.getElementById(elementId);
+      const canvas = await html2canvas(el, { backgroundColor: "#0B0F17", scale: 2 });
+      const link = document.createElement("a");
+      link.download = `${filename}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+      toast("تم حفظ الصورة", "🖼");
+    } catch (e) {
+      toast("فشل حفظ الصورة — تحقق من الاتصال بالإنترنت", "⚠️");
+    }
+  }
+
+  /* ---------------------------------------------------------------------
+     HTML escaping — every player/team/tournament/season name is typed by
+     the person, so it must never be trusted as raw HTML when rendered.
+  --------------------------------------------------------------------- */
+  function escapeHtml(str) {
+    if (str == null) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function teamLabel(player) {
+    if (!player) return "—";
+    return escapeHtml((player.team && player.team.trim()) ? player.team : player.name);
+  }
+
+  /* ---------------------------------------------------------------------
+     Shield badge — wraps a glyph (emoji/flag/logo) in a branded crest
+     shape using a competition's own colors, instead of a bare floating
+     emoji. sizeClass: "" (default) | "eftm-badge-sm" | "eftm-badge-lg"
+  --------------------------------------------------------------------- */
+  function badgeHTML(glyph, colors, sizeClass) {
+    const c = colors || DB.DEFAULT_THEME;
+    const cls = sizeClass ? `eftm-badge ${sizeClass}` : "eftm-badge";
+    return `<span class="${cls}" style="--b-primary:${c.primary};--b-secondary:${c.secondary};--b-accent:${c.accent};">${glyph}</span>`;
+  }
+
+  /* Resolve a tournament's badge colors from its league/cup id (falls back
+     to the default theme for knockout/custom tournaments). */
+  function tournamentBadgeColors(t) {
+    if (!t || !t.leagueId) return DB.DEFAULT_THEME;
+    const found = DB.LEAGUES.find(l => l.id === t.leagueId) || DB.CUPS.find(c => c.id === t.leagueId);
+    return found ? found.colors : DB.DEFAULT_THEME;
+  }
+  function tournamentBadge(t, sizeClass) {
+    return badgeHTML(t.logo || "🏆", tournamentBadgeColors(t), sizeClass);
+  }
+
+  /* ---------------------------------------------------------------------
+     Navigation icon set — clean outline SVGs (Feather-style) instead of
+     emoji, so the bottom nav looks consistent across every device.
+  --------------------------------------------------------------------- */
+  const NAV_ICONS = {
+    home: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1v-9"/></svg>`,
+    tournament: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v6a4 4 0 0 1-8 0V4Z"/><path d="M8 5H5a1 1 0 0 0-1 1v1a3 3 0 0 0 3 3"/><path d="M16 5h3a1 1 0 0 1 1 1v1a3 3 0 0 1-3 3"/><path d="M12 14v3"/><path d="M9 20h6"/><path d="M10 17h4v3h-4z"/></svg>`,
+    leaderboard: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-7"/></svg>`,
+    statistics: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m7 14 4-4 3 3 5-6"/></svg>`,
+    history: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 3"/></svg>`,
+    halloffame: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="m8.5 12.5-1.5 7L12 17l5 2.5-1.5-7"/></svg>`,
+    settings: `<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.37a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.63 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 0 1 4 0v.09a1.7 1.7 0 0 0 1.04 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 0 1 0 4h-.09a1.7 1.7 0 0 0-1.51 1.04Z"/></svg>`,
+  };
+
+  /* ---------------------------------------------------------------------
+     Rank-change arrow helper
+  --------------------------------------------------------------------- */
+  function trendIcon(trend) {
+    if (trend === "up") return `<span class="trend trend-up">⬆</span>`;
+    if (trend === "down") return `<span class="trend trend-down">⬇</span>`;
+    if (trend === "new") return `<span class="trend trend-new">★</span>`;
+    return `<span class="trend trend-same">→</span>`;
+  }
+
+  /* expose */
+  window.EFTM_UI = {
+    applySavedTheme, toggleTheme, applyLeagueTheme,
+    Sound, toast, launchConfetti, launchFireworks, showCelebration,
+    runDrawAnimation, confirmChoice, exportStandingsPDF, exportStandingsExcel, exportElementAsImage,
+    trendIcon, teamLabel, escapeHtml, badgeHTML, tournamentBadgeColors, tournamentBadge, NAV_ICONS,
+  };
+
+  document.addEventListener("DOMContentLoaded", applySavedTheme);
+})();
+
+
+/* ============================================================================
+   ROUTER — hash-based single-page navigation between the 7 views
+   ============================================================================ */
+const VIEWS = ["home","tournament","leaderboard","statistics","history","settings","halloffame"];
+
+function buildNav(){
+  const items = [
+    { key: "home", label: "الرئيسية" },
+    { key: "tournament", label: "البطولة" },
+    { key: "leaderboard", label: "الترتيب" },
+    { key: "statistics", label: "الإحصائيات" },
+    { key: "history", label: "السجل" },
+    { key: "halloffame", label: "قاعة المشاهير" },
+    { key: "settings", label: "الإعدادات" },
+  ];
+  const nav = document.createElement("nav");
+  nav.className = "eftm-nav";
+  nav.innerHTML = items.map(it => `
+    <a href="#/${it.key}" class="eftm-nav-item" data-view="${it.key}">
+      <span class="nav-icon">${EFTM_UI.NAV_ICONS[it.key]}</span><span class="nav-label">${it.label}</span>
+    </a>`).join("");
+  return nav;
+}
+function updateNavActive(view){
+  document.querySelectorAll(".eftm-nav-item").forEach(a => a.classList.toggle("active", a.dataset.view === view));
+}
+
+function parseHash(){
+  let raw = location.hash.slice(1);
+  if (raw.startsWith("/")) raw = raw.slice(1);
+  const [path, qs] = raw.split("?");
+  const view = VIEWS.includes(path) ? path : "home";
+  return { view, params: new URLSearchParams(qs || "") };
+}
+
+function navigate(view, paramsObj){
+  const qs = paramsObj ? new URLSearchParams(paramsObj).toString() : "";
+  location.hash = "/" + view + (qs ? "?" + qs : "");
+}
+
+const VIEW_MODULES = {};
+
+function renderRoute(){
+  const { view, params } = parseHash();
+  document.querySelectorAll(".eftm-view").forEach(v => {
+    v.style.display = (v.dataset.view === view) ? "block" : "none";
+  });
+  updateNavActive(view);
+  window.scrollTo(0, 0);
+  const mod = VIEW_MODULES[view];
+  if (mod && mod.init) mod.init(params);
+}
+
+
+/* ============================================================================
+   3) VIEW MODULES — one per screen, each exposing init(params)
+   ============================================================================ */
+const ViewHome = (function(){
+  function init(params){
+    const ongoing = EFTM_DB.ongoingTournaments();
+      document.getElementById("home-resume-sub").textContent =
+        ongoing.length ? `${ongoing.length} بطولة قيد التقدم` : "لا توجد بطولات جارية بعد";
+    
+      const aboutModal = document.getElementById("about-modal");
+        document.getElementById("about-link").onclick = (e) => {
+          e.preventDefault();
+          aboutModal.classList.add("show");
+          EFTM_UI.Sound.click();
+        };
+        document.getElementById("about-close").onclick = () => aboutModal.classList.remove("show");
+    
+        document.querySelectorAll(".squad-item").forEach(el => el.onclick = () => EFTM_UI.Sound.click());
+  }
+  return { init };
+})();
+
+const ViewTournament = (function(){
+
+const DB = EFTM_DB, UI = EFTM_UI;
+const LOGOS = ["🏆","⚽","🥇","🔥","⭐","🛡","👑","🎯","⚡","🌟"];
+const AVATARS = ["👤","🧑","👨","🧔","👦","🧑‍🦱","🧑‍🦲","🧑‍🎤"];
+let currentTournamentId = null;
+
+function show(view){
+  ["chooser","create","season","resume","manage"].forEach(v=>{
+    document.getElementById("view-"+v).style.display = (v===view) ? "block" : "none";
+  });
+}
+
+/* ---------------------------- entry routing ---------------------------- */
+function init(params){
+  const action = params.get("action");
+  const id = params.get("id");
+  if (id) { openManage(id); return; }
+  if (action === "resume") { show("resume"); renderResume(); return; }
+  if (action === "new") { show("chooser"); wireChooser(); return; }
+  show("chooser"); wireChooser();
+}
+
+function wireChooser(){
+  document.getElementById("choose-tournament").onclick = () => { UI.Sound.click(); show("create"); initCreateForm(); };
+  document.getElementById("choose-season").onclick = () => { UI.Sound.click(); show("season"); initSeasonForm(); };
+}
+
+/* ============================================================
+   CREATE SINGLE TOURNAMENT
+============================================================ */
+let selectedPlayerIds = [];
+
+function initCreateForm(){
+  document.getElementById("page-title").textContent = "➕ بطولة جديدة";
+  document.getElementById("open-delete-players-btn").onclick = () => { UI.Sound.click(); openDeletePlayersModal(); };
+  const logoGrid = document.getElementById("t-logo-grid");
+  logoGrid.innerHTML = LOGOS.map(l => `<div class="choice ${l==='🏆'?'selected':''}" data-logo="${l}">${l}</div>`).join("");
+  logoGrid.onclick = e => { const c = e.target.closest(".choice"); if(!c) return;
+    logoGrid.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected")); c.classList.add("selected"); UI.Sound.click(); };
+
+  function refreshTypeDependentFields(type){
+    document.getElementById("league-picker-wrap").style.display = type === "league" ? "block" : "none";
+    document.getElementById("cup-picker-wrap").style.display = type === "cup" ? "block" : "none";
+    document.getElementById("leg-mode-wrap").style.display = type === "knockout" ? "none" : "block";
+    document.getElementById("leg-mode-sub").textContent = type === "cup" ? " (لدور المجموعات)" : "";
+    document.getElementById("points-system-wrap").style.display = type === "knockout" ? "none" : "block";
+    document.getElementById("bonus-points-wrap").style.display = type === "league" ? "block" : "none";
+  }
+
+  document.querySelectorAll('[data-type]').forEach(c => c.onclick = () => {
+    document.querySelectorAll('[data-type]').forEach(x=>x.classList.remove("selected"));
+    c.classList.add("selected"); UI.Sound.click();
+    refreshTypeDependentFields(c.dataset.type);
+    if (c.dataset.type === "cup") {
+      const sel = document.querySelector('#cup-grid .choice.selected');
+      UI.applyLeagueTheme(sel ? sel.dataset.cup : null);
+    } else if (c.dataset.type === "league") {
+      const sel = document.querySelector('#league-grid .choice.selected');
+      UI.applyLeagueTheme(sel ? sel.dataset.league : null);
+    }
+  });
+
+  const leagueGrid = document.getElementById("league-grid");
+  leagueGrid.innerHTML = DB.LEAGUES.map(l => `<div class="choice" data-league="${l.id}">${UI.badgeHTML(l.flag, l.colors)}${l.name}</div>`).join("");
+  leagueGrid.onclick = e => {
+    const c = e.target.closest(".choice"); if(!c) return;
+    leagueGrid.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected")); c.classList.add("selected");
+    UI.Sound.click();
+    UI.applyLeagueTheme(c.dataset.league);
+    document.getElementById("custom-league-name-wrap").style.display = c.dataset.league === "custom" ? "block" : "none";
+  };
+
+  const cupGrid = document.getElementById("cup-grid");
+  cupGrid.innerHTML = DB.CUPS.map(c => `<div class="choice" data-cup="${c.id}">${UI.badgeHTML(c.flag, c.colors)}${c.name}</div>`).join("");
+  cupGrid.onclick = e => {
+    const c = e.target.closest(".choice"); if(!c) return;
+    cupGrid.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected")); c.classList.add("selected");
+    UI.Sound.click();
+    UI.applyLeagueTheme(c.dataset.cup);
+    document.getElementById("custom-cup-name-wrap").style.display = c.dataset.cup === "custom_cup" ? "block" : "none";
+  };
+
+  document.querySelectorAll('[data-leg]').forEach(c => c.onclick = () => {
+    document.querySelectorAll('[data-leg]').forEach(x=>x.classList.remove("selected"));
+    c.classList.add("selected"); UI.Sound.click();
+  });
+
+  document.querySelectorAll('[data-bonus]').forEach(c => c.onclick = () => {
+    c.classList.toggle("selected"); UI.Sound.click(); // both bonuses can be active together
+  });
+
+  refreshTypeDependentFields("league");
+
+  selectedPlayerIds = [];
+  renderExistingPlayers("existing-players-grid", "player-search", selectedPlayerIds, updateSelectedUI);
+  document.getElementById("t-playercount").oninput = updateSelectedUI;
+
+  document.getElementById("add-player-btn").onclick = () => {
+    const name = document.getElementById("new-player-name").value.trim();
+    const team = document.getElementById("new-player-team").value.trim();
+    if (!name) return UI.toast("اكتب اسم اللاعب أولاً", "⚠️");
+    const avatar = AVATARS[Math.floor(Math.random()*AVATARS.length)];
+    const p = DB.createPlayer({ name, team, avatar });
+    selectedPlayerIds.push(p.id);
+    document.getElementById("new-player-name").value = "";
+    document.getElementById("new-player-team").value = "";
+    renderExistingPlayers("existing-players-grid", "player-search", selectedPlayerIds, updateSelectedUI);
+    updateSelectedUI();
+    UI.toast(`تمت إضافة ${name}`, "✅");
+  };
+
+  updateSelectedUI();
+
+  document.getElementById("form-create-tournament").onsubmit = (e) => {
+    e.preventDefault();
+    const name = document.getElementById("t-name").value.trim();
+    if (!name) return UI.toast("اكتب اسم البطولة", "⚠️");
+    const target = parseInt(document.getElementById("t-playercount").value || "0", 10);
+    if (selectedPlayerIds.length < 2) return UI.toast("اختر لاعبين اثنين على الأقل", "⚠️");
+    if (selectedPlayerIds.length !== target) return UI.toast(`اخترت ${selectedPlayerIds.length} من ${target} لاعبين مطلوبين`, "⚠️");
+
+    const type = document.querySelector('[data-type].selected').dataset.type;
+    const logo = document.querySelector('#t-logo-grid .choice.selected').dataset.logo;
+    let leagueId = null, customName = null;
+    if (type === "league") {
+      const leagueSel = document.querySelector('#league-grid .choice.selected');
+      leagueId = leagueSel ? leagueSel.dataset.league : "custom";
+      if (leagueId === "custom") customName = document.getElementById("custom-league-name").value.trim() || "دوري مخصص";
+    } else if (type === "cup") {
+      const cupSel = document.querySelector('#cup-grid .choice.selected');
+      leagueId = cupSel ? cupSel.dataset.cup : "custom_cup";
+      if (leagueId === "custom_cup") customName = document.getElementById("custom-cup-name").value.trim() || "كأس مخصص";
+    }
+    const legMode = type !== "knockout" ? (document.querySelector('[data-leg].selected')?.dataset.leg || "single") : "single";
+    const bonusFiveGoals = type === "league" && !!document.querySelector('[data-bonus="fiveGoals"].selected');
+    const bonusCleanSheet = type === "league" && !!document.querySelector('[data-bonus="cleanSheet"].selected');
+
+    const cfg = {
+      name, logo, type, leagueId, legMode,
+      customLeagueName: (leagueId === "custom" || leagueId === "custom_cup") ? customName : null,
+      pointsSystem: {
+        win: parseInt(document.getElementById("pt-win").value||"3",10),
+        draw: parseInt(document.getElementById("pt-draw").value||"1",10),
+        loss: parseInt(document.getElementById("pt-loss").value||"0",10),
+        bonusFiveGoals, bonusCleanSheet,
+      },
+      playerIds: selectedPlayerIds.slice(),
+    };
+    const t = DB.createTournament(cfg);
+    const names = selectedPlayerIds.map(id => DB.getPlayer(id).name);
+    UI.runDrawAnimation(names, () => { navigate("tournament", {id: t.id}); }, { label: "قرعة تشكيل البطولة" });
+  };
+}
+
+function updateSelectedUI(){
+  document.getElementById("selected-count").textContent = selectedPlayerIds.length;
+  document.getElementById("target-count").textContent = document.getElementById("t-playercount").value;
+  const pills = document.getElementById("selected-pills");
+  pills.innerHTML = selectedPlayerIds.map(id => {
+    const p = DB.getPlayer(id);
+    return `<span class="badge">${p.avatar} ${UI.escapeHtml(p.name)} <b data-remove="${id}" style="cursor:pointer;color:var(--crimson)">×</b></span>`;
+  }).join("");
+  pills.querySelectorAll("[data-remove]").forEach(b => b.onclick = () => {
+    selectedPlayerIds = selectedPlayerIds.filter(id => id !== b.dataset.remove);
+    renderExistingPlayers("existing-players-grid","player-search",selectedPlayerIds,updateSelectedUI);
+    updateSelectedUI();
+  });
+}
+
+function renderExistingPlayers(gridId, searchId, selectedArrRef, onChange){
+  const grid = document.getElementById(gridId);
+  const searchEl = document.getElementById(searchId);
+  function draw(){
+    const q = (searchEl.value || "").trim();
+    const list = DB.allPlayers().filter(p => !q || p.name.includes(q) || (p.team||"").includes(q));
+    grid.innerHTML = list.map(p => `<div class="choice ${selectedArrRef.includes(p.id)?'selected':''}" data-pid="${p.id}">${p.avatar} ${UI.escapeHtml(p.name)}</div>`).join("")
+      || `<div class="page-sub">لا يوجد لاعبون مطابقون</div>`;
+  }
+  grid.onclick = (e) => {
+    const c = e.target.closest(".choice"); if(!c) return;
+    const id = c.dataset.pid;
+    const idx = selectedArrRef.indexOf(id);
+    if (idx === -1) selectedArrRef.push(id); else selectedArrRef.splice(idx,1);
+    c.classList.toggle("selected");
+    UI.Sound.click();
+    onChange();
+  };
+  searchEl.oninput = draw;
+  draw();
+}
+
+/* ============================================================
+   DELETE PLAYERS (accessible from both the tournament and season
+   player-selection sections)
+============================================================ */
+function openDeletePlayersModal(){
+  const allPl = DB.allPlayers();
+  const overlay = document.createElement("div");
+  overlay.className = "eftm-celebration";
+  overlay.innerHTML = `
+    <div class="cel-content card" style="text-align:right;max-width:440px;max-height:82vh;overflow-y:auto;">
+      <h2 style="font-size:22px;display:flex;align-items:center;gap:8px;">🗑 حذف لاعبين</h2>
+      <p class="page-sub" style="margin-top:6px;">اختر لاعبًا أو أكثر لحذفهم نهائيًا. الحذف لا يمكن التراجع عنه.</p>
+      <div id="delete-players-search-wrap" style="margin-top:12px;">
+        <input type="text" id="delete-players-search" placeholder="🔍 ابحث عن لاعب...">
+      </div>
+      <div id="delete-players-list" style="margin-top:12px;display:flex;flex-direction:column;gap:8px;max-height:40vh;overflow-y:auto;">
+        ${allPl.length ? "" : `<div class="empty-state"><span class="icon">📭</span>لا يوجد لاعبون بعد</div>`}
+      </div>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <button class="btn btn-ghost btn-block" id="delete-players-cancel">إلغاء</button>
+        <button class="btn btn-danger btn-block" id="delete-players-confirm" ${allPl.length?'':'disabled'}>حذف المحدد (<span id="delete-players-count">0</span>)</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  requestAnimationFrame(() => overlay.classList.add("show"));
+
+  const listHost = overlay.querySelector("#delete-players-list");
+  const countEl = overlay.querySelector("#delete-players-count");
+  const confirmBtn = overlay.querySelector("#delete-players-confirm");
+
+  function paintList(filter){
+    const q = (filter || "").trim();
+    const filtered = allPl.filter(p => !q || p.name.includes(q) || (p.team||"").includes(q));
+    listHost.innerHTML = filtered.length ? filtered.map(p => `
+      <label style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--bg-panel-3);border-radius:10px;cursor:pointer;">
+        <input type="checkbox" class="del-player-check" value="${p.id}" style="width:18px;height:18px;flex-shrink:0;">
+        <span style="flex:1;">${p.avatar} ${UI.escapeHtml(p.name)}${p.team ? ` <span style="color:var(--text-dim);font-size:12px;">(${UI.escapeHtml(p.team)})</span>` : ""}</span>
+      </label>`).join("") : `<div class="page-sub" style="text-align:center;padding:10px;">لا يوجد لاعبون مطابقون</div>`;
+    listHost.querySelectorAll(".del-player-check").forEach(c => c.onchange = updateCount);
+  }
+  function updateCount(){
+    const n = overlay.querySelectorAll(".del-player-check:checked").length;
+    countEl.textContent = n;
+    confirmBtn.disabled = n === 0;
+  }
+  if (allPl.length) paintList("");
+  const searchInput = overlay.querySelector("#delete-players-search");
+  if (searchInput) searchInput.oninput = () => paintList(searchInput.value);
+
+  const close = () => { overlay.classList.remove("show"); setTimeout(() => overlay.remove(), 300); };
+  overlay.querySelector("#delete-players-cancel").onclick = close;
+  confirmBtn.onclick = () => {
+    const checkedIds = Array.from(overlay.querySelectorAll(".del-player-check:checked")).map(c => c.value);
+    if (!checkedIds.length) return;
+
+    const involvedInTournaments = checkedIds.some(id => DB.tournamentsInvolvingPlayer(id).length > 0);
+    const warning = involvedInTournaments
+      ? `تنبيه: بعض اللاعبين المحددين موجودون ضمن بطولات (جارية أو منتهية). حذفهم هيشيلهم من قوائم اللاعبين وأي مباريات لسه ملعبتش، لكن النتائج المسجّلة هتفضل زي ما هي.\n\n`
+      : "";
+    const sure = confirm(`${warning}هل أنت متأكد من حذف ${checkedIds.length} لاعب نهائيًا؟ لا يمكن التراجع عن هذا الإجراء.`);
+    if (!sure) return;
+
+    checkedIds.forEach(id => DB.deletePlayer(id));
+    UI.toast(`تم حذف ${checkedIds.length} لاعب`, "🗑");
+    close();
+
+    // refresh whichever selection UI is currently on screen
+    if (document.getElementById("existing-players-grid")) {
+      selectedPlayerIds = selectedPlayerIds.filter(id => !checkedIds.includes(id));
+      renderExistingPlayers("existing-players-grid", "player-search", selectedPlayerIds, updateSelectedUI);
+      updateSelectedUI();
+    }
+    if (document.getElementById("season-existing-players-grid")) {
+      seasonPlayerIds = seasonPlayerIds.filter(id => !checkedIds.includes(id));
+      renderExistingPlayers("season-existing-players-grid", "season-player-search", seasonPlayerIds, () => {});
+      renderSeasonPills();
+    }
+  };
+}
+
+/* ============================================================
+   CREATE SEASON
+============================================================ */
+let seasonTournamentRows = [];
+let seasonPlayerIds = [];
+
+function initSeasonForm(){
+  document.getElementById("page-title").textContent = "📅 موسم جديد";
+  document.getElementById("open-delete-players-btn-season").onclick = () => { UI.Sound.click(); openDeletePlayersModal(); };
+  seasonTournamentRows = [];
+  seasonPlayerIds = [];
+  addSeasonTournamentRow("الدوري", "league");
+  addSeasonTournamentRow("دوري أبطال أوروبا", "cup", "champions");
+
+  document.getElementById("add-season-tournament").onclick = () => addSeasonTournamentRow("بطولة جديدة");
+
+  renderExistingPlayers("season-existing-players-grid","season-player-search", seasonPlayerIds, () => {});
+  document.getElementById("season-add-player-btn").onclick = () => {
+    const name = document.getElementById("season-new-player-name").value.trim();
+    const team = document.getElementById("season-new-player-team").value.trim();
+    if (!name) return UI.toast("اكتب اسم اللاعب", "⚠️");
+    const avatar = AVATARS[Math.floor(Math.random()*AVATARS.length)];
+    const p = DB.createPlayer({ name, team, avatar });
+    seasonPlayerIds.push(p.id);
+    document.getElementById("season-new-player-name").value = "";
+    document.getElementById("season-new-player-team").value = "";
+    renderExistingPlayers("season-existing-players-grid","season-player-search", seasonPlayerIds, ()=>{});
+    renderSeasonPills();
+  };
+
+  document.getElementById("create-season-btn").onclick = () => {
+    const name = document.getElementById("s-name").value.trim() || "الموسم الأول";
+    if (seasonPlayerIds.length < 2) return UI.toast("اختر لاعبين اثنين على الأقل للموسم", "⚠️");
+    if (!seasonTournamentRows.length) return UI.toast("أضف بطولة واحدة على الأقل", "⚠️");
+    const configs = seasonTournamentRows.map(row => ({
+      name: row.nameInput.value.trim() || "بطولة",
+      logo: "🏆",
+      type: row.typeSelect.value,
+      leagueId: row.typeSelect.value === "league" ? row.leagueSelect.value
+        : row.typeSelect.value === "cup" ? row.cupSelect.value : null,
+      legMode: row.typeSelect.value === "knockout" ? "single" : row.legSelect.value,
+      pointsSystem: { win: 3, draw: 1, loss: 0, bonusFiveGoals: false, bonusCleanSheet: false },
+      playerIds: seasonPlayerIds.slice(),
+    }));
+    const season = DB.createSeason(name, configs);
+    UI.toast(`تم إنشاء الموسم: ${name} 🎉`, "📅");
+    navigate("tournament", {id: season.tournamentIds[0]});
+  };
+}
+
+function addSeasonTournamentRow(defaultName, defaultType, defaultCupId){
+  defaultType = defaultType || "league";
+  const list = document.getElementById("season-tournaments-list");
+  const row = document.createElement("div");
+  row.className = "card";
+  row.style.padding = "12px";
+  row.innerHTML = `
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+      <input type="text" class="s-t-name" value="${defaultName}" style="flex:2;min-width:110px">
+      <select class="s-t-type" style="flex:1;min-width:110px">
+        <option value="league" ${defaultType==='league'?'selected':''}>🏁 دوري</option>
+        <option value="cup" ${defaultType==='cup'?'selected':''}>🏆 كأس</option>
+        <option value="knockout" ${defaultType==='knockout'?'selected':''}>⚔ خروج مغلوب</option>
+      </select>
+      <select class="s-t-league" style="flex:1;min-width:130px;${defaultType!=='league'?'display:none;':''}">
+        ${DB.LEAGUES.map(l=>`<option value="${l.id}">${l.flag} ${l.name}</option>`).join("")}
+      </select>
+      <select class="s-t-cup" style="flex:1;min-width:130px;${defaultType!=='cup'?'display:none;':''}">
+        ${DB.CUPS.map(c=>`<option value="${c.id}" ${c.id===defaultCupId?'selected':''}>${c.flag} ${c.name}</option>`).join("")}
+      </select>
+      <select class="s-t-leg" style="flex:1;min-width:110px;${defaultType==='knockout'?'display:none;':''}">
+        <option value="single">➡ ذهاب فقط</option>
+        <option value="double">🔁 ذهاب وإياب</option>
+      </select>
+      <button type="button" class="btn btn-sm btn-danger s-t-remove">✕</button>
+    </div>`;
+  list.appendChild(row);
+  const rowRef = {
+    el: row,
+    nameInput: row.querySelector(".s-t-name"),
+    typeSelect: row.querySelector(".s-t-type"),
+    leagueSelect: row.querySelector(".s-t-league"),
+    cupSelect: row.querySelector(".s-t-cup"),
+    legSelect: row.querySelector(".s-t-leg"),
+  };
+  rowRef.typeSelect.onchange = () => {
+    const v = rowRef.typeSelect.value;
+    rowRef.leagueSelect.style.display = v === "league" ? "block" : "none";
+    rowRef.cupSelect.style.display = v === "cup" ? "block" : "none";
+    rowRef.legSelect.style.display = v === "knockout" ? "none" : "block";
+  };
+  row.querySelector(".s-t-remove").onclick = () => {
+    seasonTournamentRows = seasonTournamentRows.filter(r => r !== rowRef);
+    row.remove();
+  };
+  seasonTournamentRows.push(rowRef);
+}
+
+function renderSeasonPills(){
+  document.getElementById("season-selected-pills").innerHTML = seasonPlayerIds.map(id=>{
+    const p = DB.getPlayer(id);
+    return `<span class="badge">${p.avatar} ${UI.escapeHtml(p.name)}</span>`;
+  }).join("");
+}
+
+/* ============================================================
+   RESUME LIST
+============================================================ */
+function renderResume(){
+  document.getElementById("page-title").textContent = "▶ استكمال بطولة";
+  const trns = DB.ongoingTournaments();
+  const seasons = DB.allSeasons().filter(s => s.status === "ongoing");
+  document.getElementById("resume-tournaments-list").innerHTML = trns.length ? trns.map(t => `
+    <a href="#/tournament?id=${t.id}" class="squad-item" style="margin-bottom:8px;">
+      ${UI.tournamentBadge(t)}
+      <span class="squad-text"><b>${UI.escapeHtml(t.name)}</b><span>${t.type === 'league' ? '🏁 دوري' : t.type === 'cup' ? '🏆 كأس' : '⚔ خروج مغلوب'} · ${t.matches.filter(m=>m.played).length}/${t.matches.length} مباراة</span></span>
+      <span class="squad-arrow">‹</span>
+    </a>`).join("") : `<div class="empty-state"><span class="icon">📭</span>لا توجد بطولات جارية</div>`;
+
+  document.getElementById("resume-seasons-list").innerHTML = seasons.length ? seasons.map(s => `
+    <a href="#/tournament?id=${s.tournamentIds[0]}" class="squad-item" style="margin-bottom:8px;">
+      ${UI.badgeHTML("📅", DB.DEFAULT_THEME)}
+      <span class="squad-text"><b>${UI.escapeHtml(s.name)}</b><span>${DB.seasonTournaments(s).length} بطولات</span></span>
+      <span class="squad-arrow">‹</span>
+    </a>`).join("") : `<div class="empty-state"><span class="icon">📭</span>لا توجد مواسم جارية</div>`;
+}
+
+/* ============================================================
+   MANAGE TOURNAMENT
+============================================================ */
+function openManage(id){
+  const t = DB.getTournament(id);
+  if (!t) { show("chooser"); wireChooser(); return; }
+  currentTournamentId = id;
+  show("manage");
+  if (t.leagueId) UI.applyLeagueTheme(t.leagueId);
+  document.getElementById("page-title").textContent = t.logo + " " + t.name;
+  let leagueLabel = "خروج مغلوب";
+  if (t.type === "league") {
+    leagueLabel = t.leagueId === "custom" ? (t.customLeagueName || "دوري مخصص") : (DB.LEAGUES.find(l=>l.id===t.leagueId)?.name || "دوري");
+  } else if (t.type === "cup") {
+    leagueLabel = t.leagueId === "custom_cup" ? (t.customLeagueName || "كأس مخصص") : (DB.CUPS.find(c=>c.id===t.leagueId)?.name || "كأس");
+  }
+  document.getElementById("page-subtitle").textContent = leagueLabel;
+
+  renderManageHeader(t);
+  renderFixtures(t);
+  renderStandingsTab(t);
+  renderRosterTab(t);
+  renderSeasonNav(t);
+  wireTabs();
+  wireCompleteButton(t);
+  wireExportButtons(t);
+  wireDeleteButton(t);
+}
+
+function renderSeasonNav(t){
+  const host = document.getElementById("season-nav-host");
+  if (!host) return;
+  if (!t.seasonId) { host.innerHTML = ""; return; }
+  const season = DB.getSeason(t.seasonId);
+  if (!season) { host.innerHTML = ""; return; }
+  const siblings = DB.seasonTournaments(season);
+  host.innerHTML = `
+    <div class="card" style="margin-bottom:14px;">
+      <div class="section-title" style="font-size:15px;">📅 ${UI.escapeHtml(season.name)} <small>${siblings.length} بطولات</small></div>
+      <div class="grid grid-2">
+        ${siblings.map(s => `
+          <a href="#/tournament?id=${s.id}" class="squad-item ${s.id===t.id?'':''}" style="${s.id===t.id ? 'border-color:var(--pitch);background:rgba(22,227,122,.08);' : ''}">
+            ${UI.tournamentBadge(s, "eftm-badge-sm")}
+            <span class="squad-text"><b>${UI.escapeHtml(s.name)}</b><span>${s.status==='completed' ? '✅ منتهية' : '🟢 جارية'}</span></span>
+            ${s.id===t.id ? '<span class="squad-arrow">●</span>' : '<span class="squad-arrow">‹</span>'}
+          </a>`).join("")}
+      </div>
+    </div>`;
+}
+
+function wireDeleteButton(t){
+  document.getElementById("delete-tournament-btn").onclick = () => {
+    const sure = confirm(`هل أنت متأكد من حذف بطولة "${t.name}" نهائيًا؟ لا يمكن التراجع عن هذا الإجراء.`);
+    if (!sure) return;
+    DB.deleteTournament(t.id);
+    UI.toast("تم حذف البطولة", "🗑");
+    navigate("tournament", {action: "resume"});
+  };
+}
+
+function renderManageHeader(t){
+  document.getElementById("manage-logo").innerHTML = UI.tournamentBadge(t, "eftm-badge-lg");
+  document.getElementById("manage-name").textContent = t.name;
+  document.getElementById("manage-status-badge").textContent = t.status === "ongoing" ? "🟢 جارية" : "✅ منتهية";
+  document.getElementById("manage-status-badge").className = "badge " + (t.status==="ongoing" ? "badge-live" : "badge-done");
+  document.getElementById("manage-type-badge").textContent = t.type === "league" ? "🏁 دوري" : t.type === "cup" ? "🏆 كأس" : "⚔ خروج مغلوب";
+  document.getElementById("manage-leg-badge").textContent = t.legMode === "double" ? "🔁 ذهاب وإياب" : "➡ ذهاب فقط";
+}
+
+function wireTabs(){
+  document.querySelectorAll('[data-tab]').forEach(btn => btn.onclick = () => {
+    UI.Sound.click();
+    ["fixtures","standings","roster"].forEach(k=>{
+      document.getElementById("tab-"+k).style.display = (k===btn.dataset.tab) ? "block" : "none";
+    });
+  });
+}
+
+function koTotalRounds(koMatches){
+  const round1Count = koMatches.filter(m => m.round === 1).length;
+  if (round1Count <= 0) return 1;
+  return Math.round(Math.log2(round1Count)) + 1;
+}
+
+function koStageLabel(round, totalRounds){
+  const roundsFromFinal = totalRounds - round;
+  if (roundsFromFinal === 0) return "🏆 النهائي";
+  if (roundsFromFinal === 1) return "🥈 نصف النهائي";
+  if (roundsFromFinal === 2) return "ربع النهائي";
+  return `دور الـ${Math.pow(2, roundsFromFinal + 1)}`;
+}
+
+function matchIsRenderable(m){
+  if (m.homeId === "__BYE__" || m.awayId === "__BYE__" || !m.homeId || !m.awayId) {
+    const real = DB.getPlayer(m.homeId === "__BYE__" ? m.awayId : m.homeId);
+    return !!real;
+  }
+  return !!(DB.getPlayer(m.homeId) && DB.getPlayer(m.awayId));
+}
+
+function renderFixtures(t){
+  const host = document.getElementById("tab-fixtures");
+  if (t.type === "cup") {
+    renderCupFixtures(t, host);
+  } else if (t.type === "knockout") {
+    const totalRounds = koTotalRounds(t.matches);
+    const rounds = {};
+    t.matches.filter(matchIsRenderable).forEach(m => { (rounds[m.round] = rounds[m.round] || []).push(m); });
+    host.innerHTML = Object.keys(rounds).sort((a,b)=>a-b).map(r => `
+      <div class="section-title" style="font-size:16px;margin-top:10px;">${koStageLabel(+r, totalRounds)}</div>
+      ${rounds[r].map(m => matchRowHTML(m)).join("")}
+    `).join("") || `<div class="empty-state">لا توجد مباريات</div>`;
+  } else {
+    const rounds = {};
+    t.matches.filter(matchIsRenderable).forEach(m => { (rounds[m.round] = rounds[m.round] || []).push(m); });
+    host.innerHTML = Object.keys(rounds).sort((a,b)=>a-b).map(r => `
+      <div class="section-title" style="font-size:16px;margin-top:10px;">جولة ${r}</div>
+      ${rounds[r].map(m => matchRowHTML(m)).join("")}
+    `).join("") || `<div class="empty-state">لا توجد مباريات</div>`;
+  }
+  wireFixtureButtons(t, host);
+}
+
+function renderCupFixtures(t, host){
+  let html = `<div class="section-title" style="font-size:18px;">🗂 دور المجموعات</div>`;
+  t.groups.forEach((g, gi) => {
+    const groupMatches = t.matches.filter(m => m.stage === "group" && m.groupIndex === gi && matchIsRenderable(m));
+    const rounds = {};
+    groupMatches.forEach(m => { (rounds[m.round] = rounds[m.round] || []).push(m); });
+    html += `<div class="section-title" style="font-size:15px;margin-top:14px;color:var(--gold);">${g.name}</div>`;
+    html += Object.keys(rounds).sort((a,b)=>a-b).map(r => `
+      <div class="section-title" style="font-size:12px;margin-top:6px;color:var(--text-dim);">جولة ${r}</div>
+      ${rounds[r].map(m => matchRowHTML(m)).join("")}
+    `).join("");
+  });
+
+  const koMatches = t.matches.filter(m => m.stage === "knockout" && matchIsRenderable(m));
+  if (koMatches.length) {
+    const totalRounds = koTotalRounds(koMatches);
+    const koRounds = {};
+    koMatches.forEach(m => { (koRounds[m.round] = koRounds[m.round] || []).push(m); });
+    html += `<div class="section-title" style="font-size:18px;margin-top:22px;">⚔ الأدوار الإقصائية</div>`;
+    html += Object.keys(koRounds).sort((a,b)=>a-b).map(r => `
+      <div class="section-title" style="font-size:15px;margin-top:10px;">${koStageLabel(+r, totalRounds)}</div>
+      ${koRounds[r].map(m => matchRowHTML(m)).join("")}
+    `).join("");
+  } else {
+    html += `<div class="empty-state" style="margin-top:16px;"><span class="icon">⏳</span>الأدوار الإقصائية ستظهر هنا بعد اكتمال دور المجموعات</div>`;
+  }
+  host.innerHTML = html;
+}
+
+function wireFixtureButtons(t, host){
+  host.querySelectorAll(".save-score-btn").forEach(btn => btn.onclick = () => {
+    const mid = btn.dataset.mid;
+    const hg = parseInt(document.getElementById("hg-"+mid).value, 10);
+    const ag = parseInt(document.getElementById("ag-"+mid).value, 10);
+    if (isNaN(hg) || isNaN(ag) || hg < 0 || ag < 0) return UI.toast("أدخل نتيجة صحيحة", "⚠️");
+
+    const m = t.matches.find(mm => mm.id === mid);
+    if (m.stage === "knockout" && hg === ag) {
+      const home = DB.getPlayer(m.homeId), away = DB.getPlayer(m.awayId);
+      UI.confirmChoice("تعادل! من الفائز بركلات الترجيح؟", [
+        { label: `🥅 ${UI.teamLabel(home)}`, value: home.id },
+        { label: `🥅 ${UI.teamLabel(away)}`, value: away.id },
+      ], (winnerId) => {
+        DB.recordResult(t.id, mid, hg, ag, winnerId);
+        afterScoreSaved(t.id);
+      });
+      return;
+    }
+    DB.recordResult(t.id, mid, hg, ag);
+    afterScoreSaved(t.id);
+  });
+  host.querySelectorAll(".edit-score-btn").forEach(btn => btn.onclick = () => {
+    DB.clearResult(t.id, btn.dataset.mid);
+    const fresh = DB.getTournament(t.id);
+    renderFixtures(fresh);
+    renderStandingsTab(fresh);
+    wireCompleteButton(fresh);
+  });
+}
+
+function afterScoreSaved(tournamentId){
+  UI.Sound.goal();
+  UI.toast("تم حفظ النتيجة", "✅");
+  const fresh = DB.getTournament(tournamentId);
+  renderFixtures(fresh);
+  renderStandingsTab(fresh);
+  renderRosterTab(fresh);
+  wireCompleteButton(fresh);
+}
+
+function matchRowHTML(m){
+  if (m.homeId === "__BYE__" || m.awayId === "__BYE__" || !m.homeId || !m.awayId) {
+    const real = DB.getPlayer(m.homeId === "__BYE__" ? m.awayId : m.homeId);
+    return `<div class="match-row"><div class="match-side">${real?UI.teamLabel(real):'—'} (استراحة)</div><div></div><div></div></div>`;
+  }
+  const home = DB.getPlayer(m.homeId), away = DB.getPlayer(m.awayId);
+  if (!home || !away) return "";
+  if (m.played) {
+    return `<div class="match-row match-played">
+      <div class="match-side">${home.avatar} ${UI.teamLabel(home)}</div>
+      <div class="match-score-static num">${m.homeGoals} - ${m.awayGoals}</div>
+      <div class="match-side away">${away.avatar} ${UI.teamLabel(away)}</div>
+      <div style="grid-column:1/-1;text-align:center;margin-top:4px;">
+        <button class="btn btn-sm btn-ghost edit-score-btn" data-mid="${m.id}">✏ تعديل النتيجة</button>
+      </div>
+    </div>`;
+  }
+  return `<div class="match-row">
+    <div class="match-side">${home.avatar} ${UI.teamLabel(home)}</div>
+    <div class="match-score">
+      <input type="number" min="0" id="hg-${m.id}" placeholder="0">
+      <span>-</span>
+      <input type="number" min="0" id="ag-${m.id}" placeholder="0">
+    </div>
+    <div class="match-side away">${away.avatar} ${UI.teamLabel(away)}</div>
+    <div style="grid-column:1/-1;text-align:center;margin-top:4px;">
+      <button class="btn btn-sm btn-primary save-score-btn" data-mid="${m.id}">💾 حفظ النتيجة</button>
+    </div>
+  </div>`;
+}
+
+function renderStandingsTab(t){
+  const host = document.getElementById("tab-standings");
+  if (t.type === "cup") {
+    renderCupStandings(t, host);
+    return;
+  }
+  const rows = DB.computeStandings(t);
+  host.innerHTML = `
+    <div class="card" id="standings-capture">
+      <table class="standings-table">
+        <thead><tr>
+          <th></th><th>اللاعب</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>ف.أ</th><th>نقاط</th>
+        </tr></thead>
+        <tbody>
+          ${rows.map(r => {
+            const p = DB.getPlayer(r.id);
+            const rankClass = r.rank===1?'top1':r.rank===2?'top2':r.rank===3?'top3':'';
+            return `<tr>
+              <td><span class="rank-badge ${rankClass} num">${r.rank}</span></td>
+              <td><div class="player-cell"><span class="player-avatar">${p?p.avatar:'👤'}</span>${UI.teamLabel(p)} ${UI.trendIcon(r.trend)}</div></td>
+              <td class="num">${r.played}</td><td class="num">${r.w}</td><td class="num">${r.d}</td><td class="num">${r.l}</td>
+              <td class="num">${r.gf}</td><td class="num">${r.ga}</td><td class="num">${r.gd>0?'+':''}${r.gd}</td>
+              <td class="pts-cell">${r.pts}</td>
+            </tr>`;
+          }).join("") || `<tr><td colspan="10" style="text-align:center;padding:20px;">لا توجد بيانات بعد</td></tr>`}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+function renderCupStandings(t, host){
+  const qualCount = t.qualifiersPerGroup || 2;
+  let html = `<div id="standings-capture">`;
+  t.groups.forEach((g, gi) => {
+    const rows = DB.computeGroupStandings(t, gi);
+    html += `
+      <div class="card" style="margin-bottom:12px;">
+        <div class="section-title" style="font-size:16px;">${g.name} <small>أول ${qualCount} يتأهلون</small></div>
+        <table class="standings-table">
+          <thead><tr><th></th><th>الفريق</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>ف.أ</th><th>نقاط</th></tr></thead>
+          <tbody>
+            ${rows.map(r => {
+              const p = DB.getPlayer(r.id);
+              const qualified = r.rank <= qualCount;
+              const rankClass = qualified ? 'top1' : '';
+              return `<tr style="${qualified ? 'background:rgba(22,227,122,.06);' : ''}">
+                <td><span class="rank-badge ${rankClass} num">${r.rank}</span></td>
+                <td><div class="player-cell"><span class="player-avatar">${p?p.avatar:'👤'}</span>${UI.teamLabel(p)}</div></td>
+                <td class="num">${r.played}</td><td class="num">${r.w}</td><td class="num">${r.d}</td><td class="num">${r.l}</td>
+                <td class="num">${r.gf}</td><td class="num">${r.ga}</td><td class="num">${r.gd>0?'+':''}${r.gd}</td>
+                <td class="pts-cell">${r.pts}</td>
+              </tr>`;
+            }).join("") || `<tr><td colspan="10" style="text-align:center;padding:14px;">لا نتائج بعد</td></tr>`}
+          </tbody>
+        </table>
+      </div>`;
+  });
+  html += `</div>`;
+  host.innerHTML = html;
+}
+
+function renderRosterTab(t){
+  const host = document.getElementById("tab-roster");
+  host.innerHTML = `<div class="grid grid-2">` + t.playerIds.filter(id=>id!=="__BYE__").map(id => {
+    const p = DB.getPlayer(id);
+    if (!p) return "";
+    const rating = Math.min(99, 60 + Math.floor(p.career.goals*0.6) + p.level);
+    const xpPct = Math.round(100 * p.xp / DB.xpForLevel(p.level));
+    return `<div class="player-card">
+      <div class="pc-top">
+        <div class="pc-avatar">${p.avatar}</div>
+        <div><div class="pc-name">${UI.escapeHtml(p.name)}</div><div class="pc-team">🏟 ${p.team ? UI.escapeHtml(p.team) : 'بدون فريق'}</div></div>
+        <div class="pc-rating num">${rating}</div>
+      </div>
+      <div class="pc-stats">
+        <div class="pc-stat">🏆 بطولات <b>${p.career.tournamentsWon}</b></div>
+        <div class="pc-stat">⚽ أهداف <b>${p.career.goals}</b></div>
+        <div class="pc-stat">🧤 شباك نظيفة <b>${p.career.cleanSheets}</b></div>
+        <div class="pc-stat">⭐ مستوى <b>${p.level}</b></div>
+      </div>
+      <div class="pc-level"><i style="width:${xpPct}%"></i></div>
+    </div>`;
+  }).join("") + `</div>`;
+}
+
+function wireCompleteButton(t){
+  const btn = document.getElementById("complete-tournament-btn");
+  const hint = document.getElementById("complete-hint");
+  if (t.status === "completed") {
+    btn.disabled = true; btn.textContent = "✅ البطولة منتهية";
+    hint.textContent = "تم تتويج البطل بالفعل لهذه البطولة";
+    return;
+  }
+  let ready, hintText;
+  if (t.type === "knockout" || t.type === "cup") {
+    ready = !!t.knockoutChampion;
+    const koMatches = t.matches.filter(m => m.stage === "knockout");
+    if (t.type === "cup" && !koMatches.length) {
+      const groupMatches = t.matches.filter(m => m.stage === "group");
+      const pending = groupMatches.filter(m => !m.played).length;
+      hintText = `تبقّى ${pending} مباراة لإنهاء دور المجموعات`;
+    } else {
+      const maxRound = koMatches.length ? koMatches.reduce((m,x)=>Math.max(m,x.round),1) : 1;
+      const pending = koMatches.filter(m => m.round === maxRound && !m.played).length;
+      hintText = ready ? "تم تتويج بطل البطولة — اضغط للاحتفال! 🎉" : `تبقّى ${pending || koMatches.filter(m=>!m.played).length} مباراة لحسم الدور الحالي`;
+    }
+  } else {
+    const played = t.matches.filter(m => m.played).length;
+    const total = t.matches.filter(m => m.homeId && m.awayId && m.homeId!=="__BYE__" && m.awayId!=="__BYE__").length;
+    ready = total > 0 && played === total;
+    hintText = ready ? "كل المباريات اكتملت — اضغط للاحتفال بالبطل! 🎉" : `تبقّى ${total-played} مباراة لإنهاء البطولة`;
+  }
+  btn.disabled = !ready;
+  hint.textContent = hintText;
+  btn.onclick = () => {
+    const finished = DB.completeTournament(t.id);
+    if (!finished) return;
+    UI.showCelebration(finished);
+    renderManageHeader(finished);
+    wireCompleteButton(finished);
+    renderRosterTab(finished);
+  };
+}
+
+function wireExportButtons(t){
+  document.getElementById("export-pdf-btn").onclick = () => {
+    const rows = DB.computeStandings(t).map(r => {
+      const p = DB.getPlayer(r.id);
+      return [String(r.rank), p?p.name:"—", String(r.played), String(r.w), String(r.d), String(r.l), String(r.gf), String(r.ga), String(r.pts)];
+    });
+    UI.exportStandingsPDF(t.name, rows, ["#","اللاعب","لعب","ف","ت","خ","له","عليه","نقاط"]);
+  };
+  document.getElementById("export-excel-btn").onclick = () => {
+    const rows = DB.computeStandings(t).map(r => {
+      const p = DB.getPlayer(r.id);
+      return [r.rank, p?p.name:"—", r.played, r.w, r.d, r.l, r.gf, r.ga, r.gd, r.pts];
+    });
+    UI.exportStandingsExcel(t.name, rows, ["#","اللاعب","لعب","ف","ت","خ","له","عليه","ف.أ","نقاط"]);
+  };
+  document.getElementById("export-img-btn").onclick = () => UI.exportElementAsImage("standings-capture", t.name + "-standings");
+}
+
+  return { init };
+})();
+
+const ViewLeaderboard = (function(){
+  function init(params){
+
+  const DB = EFTM_DB, UI = EFTM_UI;
+  const picker = document.getElementById("picker");
+  const allTrn = DB.loadDB().tournaments.slice().sort((a,b)=>b.createdAt-a.createdAt);
+  const seasonsList = DB.allSeasons();
+  
+  let options = [];
+  seasonsList.forEach(s => options.push({ value: "season:"+s.id, label: `📅 ${UI.escapeHtml(s.name)} (موسم كامل)` }));
+  allTrn.forEach(t => options.push({ value: "trn:"+t.id, label: `${t.logo} ${UI.escapeHtml(t.name)} ${t.status==='ongoing'?'🟢':'✅'}` }));
+  
+  if (!options.length) {
+    document.querySelector(".page").innerHTML += `<div class="empty-state"><span class="icon">📭</span>لا توجد بطولات بعد. أنشئ بطولتك الأولى من الرئيسية.</div>`;
+  } else {
+    picker.innerHTML = options.map(o => `<option value="${o.value}">${o.label}</option>`).join("");
+    const requestedId = params.get("id");
+    if (requestedId) {
+      const match = options.find(o => o.value === "trn:"+requestedId);
+      if (match) picker.value = match.value;
+    }
+    picker.onchange = render;
+    document.getElementById("board-search").oninput = render;
+    render();
+  }
+  
+  function currentRows(){
+    const [kind, id] = picker.value.split(":");
+    if (kind === "season") {
+      const season = DB.getSeason(id);
+      const rows = DB.computeSeasonStandings(season);
+      return { rows: rows.map((r,i)=>({...r, rank:i+1, played:r.played, w:'-', d:'-', l:'-', gf:r.goals, ga:'-', gd:'-', trend:'same'})), isSeason:true, title: season.name };
+    } else {
+      const t = DB.getTournament(id);
+      return { rows: DB.computeStandings(t), isSeason:false, title: t.name };
+    }
+  }
+  
+  function render(){
+    const { rows, isSeason, title } = currentRows();
+    const q = (document.getElementById("board-search").value || "").trim();
+    const filtered = rows.filter(r => {
+      const p = DB.getPlayer(r.id);
+      if (!p) return false;
+      if (!q) return true;
+      return p.name.includes(q) || (p.team||"").includes(q);
+    });
+  
+    const thead = document.querySelector("#board-table thead");
+    const tbody = document.querySelector("#board-table tbody");
+  
+    if (isSeason) {
+      thead.innerHTML = `<tr><th></th><th>اللاعب</th><th>البطولات</th><th>الألقاب</th><th>أهداف</th><th>نقاط الموسم</th></tr>`;
+      tbody.innerHTML = filtered.map((r,i) => {
+        const p = DB.getPlayer(r.id);
+        const rankClass = i===0?'top1':i===1?'top2':i===2?'top3':'';
+        return `<tr>
+          <td><span class="rank-badge ${rankClass} num">${i+1}</span></td>
+          <td><div class="player-cell"><span class="player-avatar">${p?p.avatar:'👤'}</span>${UI.teamLabel(p)}</div></td>
+          <td class="num">${r.played}</td>
+          <td class="num">${r.titles||0} 🏆</td>
+          <td class="num">${r.goals}</td>
+          <td class="pts-cell">${r.pts}</td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="6" style="text-align:center;padding:20px;">لا نتائج</td></tr>`;
+    } else {
+      thead.innerHTML = `<tr><th></th><th>اللاعب</th><th>لعب</th><th>ف</th><th>ت</th><th>خ</th><th>له</th><th>عليه</th><th>ف.أ</th><th>نقاط</th></tr>`;
+      tbody.innerHTML = filtered.map(r => {
+        const p = DB.getPlayer(r.id);
+        const rankClass = r.rank===1?'top1':r.rank===2?'top2':r.rank===3?'top3':'';
+        return `<tr>
+          <td><span class="rank-badge ${rankClass} num">${r.rank}</span></td>
+          <td><div class="player-cell"><span class="player-avatar">${p?p.avatar:'👤'}</span>${UI.teamLabel(p)} ${UI.trendIcon(r.trend)}</div></td>
+          <td class="num">${r.played}</td><td class="num">${r.w}</td><td class="num">${r.d}</td><td class="num">${r.l}</td>
+          <td class="num">${r.gf}</td><td class="num">${r.ga}</td><td class="num">${r.gd>0?'+':''}${r.gd}</td>
+          <td class="pts-cell">${r.pts}</td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="10" style="text-align:center;padding:20px;">لا نتائج</td></tr>`;
+    }
+  
+    document.getElementById("export-pdf").onclick = () => {
+      const rowsOut = filtered.map((r,i) => {
+        const p = DB.getPlayer(r.id);
+        return isSeason ? [String(i+1), p?p.name:"—", String(r.pts)] : [String(r.rank), p?p.name:"—", String(r.pts)];
+      });
+      UI.exportStandingsPDF(title, rowsOut, isSeason ? ["#","اللاعب","نقاط"] : ["#","اللاعب","نقاط"]);
+    };
+    document.getElementById("export-excel").onclick = () => {
+      const rowsOut = filtered.map((r,i) => {
+        const p = DB.getPlayer(r.id);
+        return [i+1, p?p.name:"—", r.pts];
+      });
+      UI.exportStandingsExcel(title, rowsOut, ["#","اللاعب","نقاط"]);
+    };
+    document.getElementById("export-img").onclick = () => UI.exportElementAsImage("board-capture", title);
+  }
+  
+  }
+  return { init };
+})();
+
+const ViewStatistics = (function(){
+  const ViewStatsInternal = { currentDraw: null };
+  window.addEventListener("resize", () => { if (ViewStatsInternal.currentDraw) ViewStatsInternal.currentDraw(); });
+  function init(params){
+
+  const DB = EFTM_DB, UI = EFTM_UI;
+  function statCard(s){
+    return `<div class="stat-card">
+      <div class="icon">${s.icon}</div>
+      <div class="label">${s.label}</div>
+      <div class="value">${UI.escapeHtml(s.value)}</div>
+      ${s.sub ? `<div class="sub">${UI.escapeHtml(s.sub)}</div>` : ""}
+    </div>`;
+  }
+  
+  let globalStats = [];
+  function renderGlobal(){
+    globalStats = DB.computeGlobalStatistics();
+    paintGlobal(globalStats);
+  }
+  function paintGlobal(list){
+    document.getElementById("global-stats").innerHTML = list.length
+      ? list.map(statCard).join("")
+      : `<div class="empty-state"><span class="icon">📭</span>لا توجد بيانات كافية بعد</div>`;
+  }
+  
+  document.getElementById("stats-search").oninput = (e) => {
+    const q = e.target.value.trim();
+    paintGlobal(!q ? globalStats : globalStats.filter(s => s.label.includes(q)));
+  };
+  
+  renderGlobal();
+  
+  /* per-tournament stats */
+  const trns = DB.loadDB().tournaments;
+  if (trns.length) {
+    document.getElementById("per-tournament-section").style.display = "block";
+    const picker = document.getElementById("trn-picker");
+    picker.innerHTML = trns.map(t => `<option value="${t.id}">${t.logo} ${UI.escapeHtml(t.name)}</option>`).join("");
+    const paintTrn = () => {
+      const t = DB.getTournament(picker.value);
+      document.getElementById("trn-stats").innerHTML = DB.computeTournamentStatistics(t).map(statCard).join("");
+    };
+    picker.onchange = paintTrn;
+    paintTrn();
+  }
+  
+  /* top scorers chart (lightweight canvas bar chart, no external lib) */
+  const players = DB.allPlayers().slice().sort((a,b)=>b.career.goals - a.career.goals).slice(0,8).filter(p=>p.career.goals>0);
+  if (players.length) {
+    document.getElementById("chart-section").style.display = "block";
+    const canvas = document.getElementById("scorers-chart");
+    const ctx = canvas.getContext("2d");
+    function draw(){
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth, h = 180;
+      canvas.width = w*dpr; canvas.height = h*dpr;
+      ctx.scale(dpr,dpr);
+      ctx.clearRect(0,0,w,h);
+      const max = Math.max(...players.map(p=>p.career.goals));
+      const barW = (w - 20) / players.length - 10;
+      const styles = getComputedStyle(document.documentElement);
+      ctx.fillStyle = styles.getPropertyValue('--text-muted').trim() || '#8A96A3';
+      ctx.font = "11px Manrope";
+      players.forEach((p,i)=>{
+        const bh = Math.max(4, (p.career.goals/max) * (h-40));
+        const x = 10 + i*(barW+10);
+        const y = h - 24 - bh;
+        const grad = ctx.createLinearGradient(0,y,0,y+bh);
+        grad.addColorStop(0, styles.getPropertyValue('--pitch').trim() || '#16E37A');
+        grad.addColorStop(1, styles.getPropertyValue('--pitch-dim').trim() || '#0E9857');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(x,y,barW,bh,4) : ctx.rect(x,y,barW,bh);
+        ctx.fill();
+        ctx.fillStyle = styles.getPropertyValue('--text').trim() || '#fff';
+        ctx.textAlign = "center";
+        ctx.fillText(p.career.goals, x+barW/2, y-6);
+        ctx.fillStyle = styles.getPropertyValue('--text-muted').trim() || '#8A96A3';
+        ctx.fillText(p.name.length>7?p.name.slice(0,6)+'…':p.name, x+barW/2, h-8);
+      });
+    }
+    draw();
+    ViewStatsInternal.currentDraw = draw;
+  }
+  
+  }
+  return { init };
+})();
+
+const ViewHistory = (function(){
+  function init(params){
+
+  const DB = EFTM_DB, UI = EFTM_UI;
+  const searchBox = document.getElementById("hist-search");
+  const filterType = document.getElementById("filter-type");
+  
+  function render(){
+    const q = (searchBox.value || "").trim();
+    const type = filterType.value;
+  
+    const seasons = DB.allSeasons().filter(s => s.status === "completed" && (!q || s.name.includes(q)));
+    document.getElementById("seasons-list").innerHTML = seasons.length ? seasons.map(s => {
+      const champ = s.champion ? DB.getPlayer(s.champion) : null;
+      return `<a href="#/leaderboard?id=${s.tournamentIds[0]}" class="squad-item" style="margin-bottom:8px;">
+        ${UI.badgeHTML("👑", {primary:"#241300",secondary:"#C9861F",accent:"#F4B942"})}
+        <span class="squad-text"><b>${UI.escapeHtml(s.name)}</b><span>البطل: ${champ ? UI.escapeHtml(champ.name) : '—'} · ${DB.seasonTournaments(s).length} بطولات</span></span>
+        <span class="squad-arrow">‹</span>
+      </a>`;
+    }).join("") : `<div class="empty-state"><span class="icon">📭</span>لا توجد مواسم مكتملة بعد</div>`;
+  
+    const trns = DB.completedTournaments().filter(t => (!q || t.name.includes(q)) && (type === "all" || t.type === type));
+    document.getElementById("trn-list").innerHTML = trns.length ? trns.map(t => {
+      const champ = t.awards ? DB.getPlayer(t.awards.champion) : null;
+      const date = new Date(t.completedAt).toLocaleDateString("ar-EG");
+      return `<a href="#/leaderboard?id=${t.id}" class="squad-item" style="margin-bottom:8px;">
+        ${UI.tournamentBadge(t)}
+        <span class="squad-text"><b>${UI.escapeHtml(t.name)}</b><span>🥇 ${champ ? UI.escapeHtml(champ.name) : '—'} · ${date}</span></span>
+        <span class="squad-arrow">‹</span>
+      </a>`;
+    }).join("") : `<div class="empty-state"><span class="icon">📭</span>لا توجد بطولات مكتملة بعد</div>`;
+  }
+  
+  searchBox.oninput = render;
+  filterType.onchange = render;
+  render();
+  
+  }
+  return { init };
+})();
+
+const ViewSettings = (function(){
+  function init(params){
+
+  const DB = EFTM_DB, UI = EFTM_UI;
+  function refreshToggles(){
+    const db = DB.loadDB();
+    document.getElementById("theme-toggle").textContent = db.settings.theme === "light" ? "☀ فاتح" : "🌙 ليلي";
+    document.getElementById("sound-toggle").textContent = db.settings.sound !== false ? "🔔 مفعّل" : "🔕 معطّل";
+    document.getElementById("fx-toggle").textContent = db.settings.effects !== false ? "✨ مفعّل" : "🚫 معطّلة";
+  }
+  refreshToggles();
+  
+  document.getElementById("theme-toggle").onclick = () => { UI.toggleTheme(); refreshToggles(); UI.Sound.click(); };
+  document.getElementById("sound-toggle").onclick = () => {
+    const db = DB.loadDB();
+    db.settings.sound = db.settings.sound === false ? true : false;
+    DB.saveDB(); refreshToggles();
+    if (db.settings.sound) UI.Sound.click();
+  };
+  document.getElementById("fx-toggle").onclick = () => {
+    const db = DB.loadDB();
+    db.settings.effects = db.settings.effects === false ? true : false;
+    DB.saveDB(); refreshToggles();
+    UI.toast(db.settings.effects ? "تم تفعيل التأثيرات" : "تم تعطيل التأثيرات", "✨");
+  };
+  
+  document.getElementById("export-backup").onclick = () => {
+    const blob = new Blob([DB.exportBackupJSON()], { type: "application/json" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "eftm-backup.json";
+    link.click();
+    UI.toast("تم تصدير النسخة الاحتياطية", "💾");
+  };
+  
+  document.getElementById("import-backup-btn").onclick = () => document.getElementById("import-file").click();
+  document.getElementById("import-file").onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        DB.importBackupJSON(reader.result);
+        UI.toast("تم استيراد النسخة الاحتياطية بنجاح", "✅");
+        setTimeout(() => location.reload(), 800);
+      } catch (err) {
+        UI.toast("ملف النسخة الاحتياطية غير صالح", "⚠️");
+      }
+    };
+    reader.readAsText(file);
+  };
+  
+  document.getElementById("reset-btn").onclick = () => {
+    if (!confirm("هل أنت متأكد؟ سيتم حذف كل البيانات نهائيًا ولا يمكن التراجع.")) return;
+    DB.resetDatabase();
+    UI.toast("تم حذف كل البيانات", "🗑");
+    setTimeout(() => navigate("home"), 800);
+  };
+  
+  const notifs = DB.loadDB().notifications.slice(0, 20);
+  document.getElementById("notif-list").innerHTML = notifs.length ? notifs.map(n => `
+    <div style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">
+      <span>${n.icon}</span><span>${UI.escapeHtml(n.text)}</span>
+    </div>`).join("") : `<div class="page-sub">لا توجد إشعارات بعد</div>`;
+  
+  }
+  return { init };
+})();
+
+const ViewHallOfFame = (function(){
+  function init(params){
+
+  const DB = EFTM_DB, UI = EFTM_UI;
+  const { champions, seasonChampions, rankings } = DB.hallOfFameData();
+  
+  document.getElementById("rankings-card").innerHTML = rankings.length ? `
+    <table class="standings-table">
+      <thead><tr><th></th><th>اللاعب</th><th>🏆 ألقاب</th><th>⚽ أهداف</th><th>⭐ مستوى</th></tr></thead>
+      <tbody>
+        ${rankings.slice(0,15).map((p,i)=>{
+          const rankClass = i===0?'top1':i===1?'top2':i===2?'top3':'';
+          return `<tr>
+            <td><span class="rank-badge ${rankClass} num">${i+1}</span></td>
+            <td><div class="player-cell"><span class="player-avatar">${p.avatar}</span>${UI.escapeHtml(p.name)}</div></td>
+            <td class="num">${p.career.tournamentsWon}</td>
+            <td class="num">${p.career.goals}</td>
+            <td class="num">${p.level}</td>
+          </tr>`;
+        }).join("")}
+      </tbody>
+    </table>` : `<div class="empty-state"><span class="icon">📭</span>لا يوجد لاعبون بعد</div>`;
+  
+  document.getElementById("season-champs").innerHTML = seasonChampions.length ? seasonChampions.map(s => {
+    const p = DB.getPlayer(s.playerId);
+    return `<div class="squad-item" style="margin-bottom:8px;">
+      ${UI.badgeHTML("👑", {primary:"#241300",secondary:"#C9861F",accent:"#F4B942"})}
+      <span class="squad-text"><b>${UI.escapeHtml(s.season)}</b><span>${p ? p.avatar + ' ' + UI.escapeHtml(p.name) : '—'}</span></span>
+    </div>`;
+  }).join("") : `<div class="empty-state"><span class="icon">📭</span>لا توجد مواسم مكتملة بعد</div>`;
+  
+  document.getElementById("trn-champs").innerHTML = champions.length ? champions.map(c => {
+    const p = DB.getPlayer(c.playerId);
+    const date = new Date(c.date).toLocaleDateString("ar-EG");
+    return `<div class="squad-item" style="margin-bottom:8px;">
+      ${UI.badgeHTML(c.logo, (DB.LEAGUES.find(l=>l.id===c.leagueId) || DB.CUPS.find(x=>x.id===c.leagueId) || {colors:DB.DEFAULT_THEME}).colors)}
+      <span class="squad-text"><b>${UI.escapeHtml(c.tournament)}</b><span>${p ? p.avatar + ' ' + UI.escapeHtml(p.name) : '—'} · ${date}</span></span>
+    </div>`;
+  }).join("") : `<div class="empty-state"><span class="icon">📭</span>لا توجد بطولات مكتملة بعد</div>`;
+  
+  const unlockedCount = {};
+  DB.allPlayers().forEach(p => p.career.achievements.forEach(id => unlockedCount[id] = (unlockedCount[id]||0)+1));
+  document.getElementById("achievements-grid").innerHTML = DB.ACHIEVEMENTS.map(a => `
+    <div class="stat-card">
+      <div class="icon">${a.icon}</div>
+      <div class="label">${a.name}</div>
+      <div class="sub">${a.desc}</div>
+      <div class="value" style="font-size:14px;color:var(--pitch);">${unlockedCount[a.id] || 0} لاعب حققه</div>
+    </div>`).join("");
+  
+  }
+  return { init };
+})();
+
+
+/* ============================================================================
+   BOOTSTRAP
+   ============================================================================ */
+VIEW_MODULES.home = ViewHome;
+VIEW_MODULES.tournament = ViewTournament;
+VIEW_MODULES.leaderboard = ViewLeaderboard;
+VIEW_MODULES.statistics = ViewStatistics;
+VIEW_MODULES.history = ViewHistory;
+VIEW_MODULES.settings = ViewSettings;
+VIEW_MODULES.halloffame = ViewHallOfFame;
+
+window.addEventListener("hashchange", renderRoute);
+document.addEventListener("DOMContentLoaded", () => {
+  EFTM_UI.applySavedTheme();
+  document.getElementById("eftm-nav-host").appendChild(buildNav());
+  renderRoute();
+});
+
+</script>
+</body>
+</html>
